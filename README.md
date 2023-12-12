@@ -1,2 +1,2 @@
-# aiia-postman-collections
-Postman collections for AIIA
+# Open banking postman collections for EU
+Postman collections for Open Banking provided by AIIA, Mastercard Company
