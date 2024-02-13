@@ -1,6 +1,10 @@
 # Open banking postman collections for EU
 Postman collections for Mastercard Open Banking Europe.
 
+<p align="center">
+<img src="images/header.jpg" width="250px"/>
+</p>
+
 ## Overview
 
 The [Postman](https://www.postman.com/) collection for [Open Banking APIs](https://docs.aiia.eu) (EU).
@@ -24,7 +28,7 @@ The [Postman](https://www.postman.com/) collection for [Open Banking APIs](https
 * After navigating the user to the connect URL, the user signs up with Aiia and connects their accounts.
 
 <p align="center">
-<img src="https://docs.aiia.eu/getting-started/quickstart/authentication-intro.png" width="500px"/>
+<img src="images/connect-flow.jpg" width="500px"/>
 </p>
 
 ### Import or Fork the Collection
