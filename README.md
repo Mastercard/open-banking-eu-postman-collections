@@ -96,7 +96,7 @@ https://httpbin.org/anything?code=ygAAAAVDaXBoZXJ0ZXh0AJAAAAAAoy734oFjfPFDa9TmOt
 
 Take note of the `code`. You'll use it in the next step to get your session and log-in tokens.
 
-> **Notice** <br>We have an array of [test banks](/production/provider-support) that can test different configurations.
+> **Notice** <br>We have an array of [test banks](https://docs.aiia.eu/production/provider-support) that can test different configurations.
 
 ### Step 3 – Exchange the code for tokens
 
