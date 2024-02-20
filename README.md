@@ -33,7 +33,7 @@ This is the [Postman](https://www.postman.com/) collection for [Mastercard Open 
 
 6. Take note of your `Client ID` and `Client Secret`
 
-?> **Notice** <br>Please be aware that these credentials will only give you access to the Aiia sandbox environment and will therefore only expose _Test banks_. When you're ready to go live, go to the <a href="https://https://docs.aiia.eu/production/access" target="_blank">Production access</a> section of our documentation to learn how to get access to actual production data. 🚀
+> **Notice** <br>Please be aware that these credentials will only give you access to the Aiia sandbox environment and will therefore only expose _Test banks_. When you're ready to go live, go to the <a href="https://https://docs.aiia.eu/production/access" target="_blank">Production access</a> section of our documentation to learn how to get access to actual production data. 🚀
 
 ### Import or Fork the Collection
 1. Click here: [![Run in Postman](
@@ -44,11 +44,11 @@ https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/2078
 
 ## Onboard your first user
 
-Time to connect your first user to your service. 
+Time to test connecting your first user to your service. 
 
 ### Step 1 – Start the connect flow
 
-First, you need to find your `Client ID` and `Client Secret`. These are located within your app(s), which you can find in the [apps section](https://portal.aiia.eu/apps).
+First, you need to find your `Client ID` and `Client Secret` that we noted down earlier. These are located within your app(s), which you can find in the [apps section](https://portal.aiia.eu/apps).
 
 Found them? Great! Make sure you add them to your Postman Environment on the top right.
 
@@ -60,7 +60,7 @@ Now it’s time to connect your first user. In this example, the user is asked t
 
 The `redirect_uri` is where the user will be redirected to after finishing the log-in flow. This needs to match one of the redirects you specified when you created your application on the [developer portal](https://portal.aiia.eu/). For more details on how to onboard users and what functionality you can request, please check out [connect flow](https://docs.aiia.eu/auth/flow/) and [scopes](https://docs.aiia.eu/auth/scopes/).
 
-?> **Notice** <br>Aiia's connect flow is very similar to OAuth flow, which you might be familiar with. To access your end users' transaction data, we need to get their consent. We also need an additional consent to pass that data on to you.
+> **Notice** <br>Aiia's connect flow is very similar to the OAuth flow, which you might be familiar with. To access your end users' transaction data, we need to get their consent. We also need an additional consent to pass that data on to you.
 
 The response will be a `302 (Found or Moved Temporarily)` that you'll need to follow in order to redirect the user. Please look in the location header to figure out where you should redirect the user to.
 
@@ -96,7 +96,7 @@ https://httpbin.org/anything?code=ygAAAAVDaXBoZXJ0ZXh0AJAAAAAAoy734oFjfPFDa9TmOt
 
 Take note of the `code`. You'll use it in the next step to get your session and log-in tokens.
 
-?> **Notice** <br>We have an array of [test banks](/production/provider-support) that can test different configurations.
+> **Notice** <br>We have an array of [test banks](/production/provider-support) that can test different configurations.
 
 ### Step 3 – Exchange the code for tokens
 
@@ -179,7 +179,7 @@ Read on to learn about accessing transactions or jump straight to our [documenta
 
 ### Step 5 - Access transactions
 
-By using the `id` of an account from Step 4 and the `access_token` from Step 3, we can start pulling out user transactions by calling the following on Postman:
+By using the `id` of an account from Step 4, we can start pulling out user transactions by calling the following on Postman:
 
 ```
     Data / List Transactions
@@ -256,7 +256,7 @@ This will produce a response with a list of transactions (default: 50 transactio
 }
 ```
 
-Congratulations! You've successfully started your journey with Aiia. 
+Congratulations! You've successfully started your journey with Mastercard Open Banking Europe. 
 
 ## What's next?
 
@@ -269,4 +269,4 @@ Now that you've connected an account, you're all set to explore our API further 
 
 * [API Reference](https://api.aiia.eu/latest/) – Explore our API reference to see all the amazing things our API exposes to you 🧭
 
-* [Sample projects](https://docs.aiia.eu/other/samples) – You can find several sample applications here to view the endless capabilities of Aiia ✈️
+* [Sample projects](https://docs.aiia.eu/other/samples) – You can find several sample applications here to view the endless capabilities of Mastercard Open Banking Europe ✈️
