@@ -52,7 +52,7 @@ First, you need to find your `Client ID` and `Client Secret` that we noted down 
 
 Found them? Great! Make sure you add them to your Postman Environment on the top right.
 
-Now it’s time to connect your first user. In this example, the user is asked to share accounts and transaction data with you, as indicated by the [scope](https://docs.aiia.eu/auth/scopes/). You should call the following endpoint in Postman:
+Now it’s time to connect your first user. In this example, the user is asked to share accounts and transaction data with you, as indicated by the [scope](https://docs.aiia.eu/auth/scopes/). You should send the following request in Postman:
 
 ```
   Connect / OAuth2 Connect
@@ -128,7 +128,7 @@ The `access_token` you have received will now automatically get populated into y
 
 ### Step 4 – Access accounts
 
-Now you're all set to access the user's data.  You do so by calling the following in Postman:
+Now you're all set to access the user's data.  You do so by sending the following request in Postman:
 
 ```
     Data / List Accounts
@@ -179,7 +179,7 @@ Read on to learn about accessing transactions or jump straight to our [documenta
 
 ### Step 5 - Access transactions
 
-By using the `id` of an account from Step 4, we can start pulling out user transactions by calling the following on Postman:
+By using the `id` of an account from Step 4, we can start pulling out user transactions by sending the following request on Postman:
 
 ```
     Data / List Transactions
