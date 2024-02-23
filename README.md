@@ -1,4 +1,4 @@
-# Open Banking postman collections for EU
+# Open Banking Postman collections for EU
 Postman collections for Mastercard Open Banking Europe.
 
 <p align="center">
