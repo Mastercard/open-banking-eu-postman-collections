@@ -9,14 +9,20 @@ Mastercard acquired Open Banking startup Aiia in 2021, effectively making it Mas
 
 ## Overview
 
-This is the [Postman](https://www.postman.com/) collection for [Mastercard Open Banking Europe APIs](https://docs.aiia.eu).
+These are the [Postman](https://www.postman.com/) collections for [Mastercard Open Banking Europe APIs](https://aiia.eu).
 
-## Collection
-[Collection JSON ⤓](./openbanking-eu.postman_collection.json)
+## Collections
+### Aiia: for unlicenced customers
+Compliant and reliable Open Banking Payments & Data services from day one. Best of all, Aiia is PSD2 compliant out of the box – no license required, no hassle – so you can get started with one line of code.
 
-[Environment - Sandbox JSON ⤓](./openbanking-eu.postman_environment-sandbox.json)
+[Aiia Collection JSON ⤓](./openbanking-eu.postman_collection.json)
 
-[Environment - Production JSON ⤓](./openbanking-eu.postman_environment-production.json)
+[Aiia Environment - Sandbox JSON ⤓](./openbanking-eu.postman_environment-sandbox.json)
+
+[Aiia Environment - Production JSON ⤓](./openbanking-eu.postman_environment-production.json)
+
+### Aiia Enterprise: for licenced customers
+Aiia Enterprise - soon
 
 ## Run the Collection
 ### Things to Know :point_down:
