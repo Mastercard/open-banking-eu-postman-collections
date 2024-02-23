@@ -1,11 +1,11 @@
-# Open banking postman collections for EU
+# Open Banking postman collections for EU
 Postman collections for Mastercard Open Banking Europe.
 
 <p align="center">
 <img src="images/header.jpg" width="250px"/>
 </p>
 
-Mastercard acquired Open Banking startup Aiia in 2021, effectively making it Mastercard Open Banking Europe. While rebranding efforts are ongoing, you will find both Mastercard Open Banking Europe and Aiia in use thorughout this document, but they essentially refer to the same entitity.
+Mastercard acquired Open Banking startup Aiia in 2021, effectively making it Mastercard Open Banking Europe. While rebranding efforts are ongoing, you will find both Mastercard Open Banking Europe and Aiia in use throughout this document, but they essentially refer to the same entity.
 
 ## Overview
 
@@ -39,7 +39,7 @@ Aiia Enterprise - soon
 
 6. Take note of your `Client ID` and `Client Secret`
 
-> **Notice** <br>Please be aware that these credentials will only give you access to the Aiia sandbox environment and will therefore only expose _Test banks_. When you're ready to go live, go to the <a href="https://https://docs.aiia.eu/production/access" target="_blank">Production access</a> section of our documentation to learn how to get access to actual production data. 🚀
+> **Notice** <br>Please be aware that these credentials will only give you access to the Aiia sandbox environment and will therefore only expose _Test banks_. When you're ready to go live, go to the <a href="https://docs.aiia.eu/#/production/access" target="_blank">Production access</a> section of our documentation to learn how to get access to actual production data. 🚀
 
 ### Import or Fork the Collection
 1. Click here: [![Run in Postman](
@@ -58,13 +58,13 @@ First, you need to find your `Client ID` and `Client Secret` that we noted down 
 
 Found them? Great! Make sure you add them to your Postman Environment on the top right.
 
-Now it’s time to connect your first user. In this example, the user is asked to share accounts and transaction data with you, as indicated by the [scope](https://docs.aiia.eu/auth/scopes/). You should send the following request in Postman:
+Now it’s time to connect your first user. In this example, the user is asked to share accounts and transaction data with you, as indicated by the [scope](https://docs.aiia.eu/#/auth/scopes/). You should send the following request in Postman:
 
 ```
   Connect / OAuth2 Connect
 ```
 
-The `redirect_uri` is where the user will be redirected to after finishing the log-in flow. This needs to match one of the redirects you specified when you created your application on the [developer portal](https://portal.aiia.eu/). For more details on how to onboard users and what functionality you can request, please check out [connect flow](https://docs.aiia.eu/auth/flow/) and [scopes](https://docs.aiia.eu/auth/scopes/).
+The `redirect_uri` is where the user will be redirected to after finishing the log-in flow. This needs to match one of the redirects you specified when you created your application on the [developer portal](https://portal.aiia.eu/). For more details on how to onboard users and what functionality you can request, please check out [connect flow](https://docs.aiia.eu/#/auth/flow/) and [scopes](https://docs.aiia.eu/#/auth/scopes/).
 
 > **Notice** <br>Aiia's connect flow is very similar to the OAuth flow, which you might be familiar with. To access your end users' transaction data, we need to get their consent. We also need an additional consent to pass that data on to you.
 
@@ -102,11 +102,11 @@ https://httpbin.org/anything?code=ygAAAAVDaXBoZXJ0ZXh0AJAAAAAAoy734oFjfPFDa9TmOt
 
 Take note of the `code`. You'll use it in the next step to get your session and log-in tokens.
 
-> **Notice** <br>We have an array of [test banks](https://docs.aiia.eu/production/provider-support) that can test different configurations.
+> **Notice** <br>We have an array of [test banks](https://docs.aiia.eu/#/production/provider-support) that can test different configurations.
 
 ### Step 3 – Exchange the code for tokens
 
-Use the `code` from Step 2 to get an access token for the user. Please notice that the `code` may be URL encoded if you received it in your browser. Therefore, you must remember to decode it if you're walking through this guide step by step. 
+Use the `code` from Step 2 to get an access token for the user. Please notice that the `code` may be URL encoded if you received it in your browser. Therefore, you must remember to decode it if you're walking through this guide step by step. You can use [this](https://www.urldecoder.org) or any other URL decoder to do the magic. Make sure use the decoded URL in the `code`.
 
 The `redirect_uri` should be automatically filled in by the postman environment.
 
@@ -181,7 +181,7 @@ This endpoint will produce a response that contains an overview of the user's ac
 
 Now that you've gotten account access, you can either proceed to access transactions from those accounts or to make payments. Please take note of the `id` of one of the accounts, as you will need it when proceeding.
 
-Read on to learn about accessing transactions or jump straight to our [documentation on payments](https://docs.aiia.eu/payments/intro).
+Read on to learn about accessing transactions or jump straight to our [documentation on payments](https://docs.aiia.eu/#/payments/intro).
 
 ### Step 5 - Access transactions
 
@@ -267,12 +267,12 @@ Congratulations! You've successfully started your journey with Mastercard Open B
 ## What's next?
 
 Now that you've connected an account, you're all set to explore our API further 🚀
-* [Access account information](https://docs.aiia.eu/accounts/information) – See more details on how to use accounts and transactions 🧭
+* [Access account information](https://docs.aiia.eu/#/accounts/information) – See more details on how to use accounts and transactions 🧭
 
-* [Payments](https://docs.aiia.eu/payments/intro) – Discover our payment products and see how to get started 🧭
+* [Payments](https://docs.aiia.eu/#/payments/intro) – Discover our payment products and see how to get started 🧭
 
-* [Event notifications](https://docs.aiia.eu/webhooks/introduction) – Explore how you can start receiving notifications. They'll give you a real-time experience by notifying you of any changes. They can be used for accounts, transactions and payments 🧭
+* [Event notifications](https://docs.aiia.eu/#/webhooks/introduction) – Explore how you can start receiving notifications. They'll give you a real-time experience by notifying you of any changes. They can be used for accounts, transactions and payments 🧭
 
-* [API Reference](https://api.aiia.eu/latest/) – Explore our API reference to see all the amazing things our API exposes to you 🧭
+* [API Reference](https://api.aiia.eu/latest/index.html) – Explore our API reference to see all the amazing things our API exposes to you 🧭
 
-* [Sample projects](https://docs.aiia.eu/other/samples) – You can find several sample applications here to view the endless capabilities of Mastercard Open Banking Europe ✈️
+* [Sample projects](https://docs.aiia.eu/#/other/samples) – You can find several sample applications here to view the endless capabilities of Mastercard Open Banking Europe ✈️
