@@ -2,7 +2,7 @@
 Postman collections for Mastercard Open Banking Europe.
 
 <p align="center">
-<img src="images/header.jpg" width="250px"/>
+<img src="images/header.png" width="250px"/>
 </p>
 
 Mastercard acquired Open Banking startup Aiia in 2021, effectively making it Mastercard Open Banking Europe. While rebranding efforts are ongoing, you will find both Mastercard Open Banking Europe and Aiia in use throughout this document, but they essentially refer to the same entity.
