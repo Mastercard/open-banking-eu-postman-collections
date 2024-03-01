@@ -5,8 +5,6 @@ Postman collections for Mastercard Open Banking Europe.
 <img src="images/header.png" width="250px"/>
 </p>
 
-Mastercard acquired Open Banking startup Aiia in 2021, effectively making it Mastercard Open Banking Europe. While rebranding efforts are ongoing, you will find both Mastercard Open Banking Europe and Aiia in use throughout this document, but they essentially refer to the same entity.
-
 ## Overview
 
 These are the [Postman](https://www.postman.com/) collections for [Mastercard Open Banking Europe APIs](https://aiia.eu).
@@ -18,8 +16,6 @@ Compliant and reliable Open Banking Payments & Data services from day one. Best 
 [Aiia Collection JSON ⤓](./openbanking-eu.postman_collection.json)
 
 [Aiia Environment - Sandbox JSON ⤓](./openbanking-eu.postman_environment-sandbox.json)
-
-[Aiia Environment - Production JSON ⤓](./openbanking-eu.postman_environment-production.json)
 
 ### Aiia Enterprise: for licenced customers
 Aiia Enterprise - soon
