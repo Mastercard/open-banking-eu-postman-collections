@@ -10,15 +10,35 @@ Postman collections for Mastercard Open Banking Europe.
 These are the [Postman](https://www.postman.com/) collections for [Mastercard Open Banking Europe APIs](https://aiia.eu).
 
 ## Collections
-### Aiia Data and Aiia Pay: for unlicenced customers
-Compliant and reliable Open Banking Payments & Data services from day one. Best of all, Aiia is PSD2 compliant out of the box – no license required, no hassle – so you can get started with one line of code.
 
-[Aiia Collection JSON ⤓](./openbanking-eu.postman_collection.json)
+### For unlicenced customers
+Our PSD2 compliant service is an out of the box ready, no license required, no hassle. You can get started with one line of code.
 
-[Aiia Environment - Sandbox JSON ⤓](./openbanking-eu.postman_environment-sandbox.json)
+#### Aiia Data and Aiia Pay
+Compliant and reliable Open Banking Payments & Data services from day one. 
+[Pay & Data Collection JSON ⤓](./openbanking-eu.postman_collection.json)
 
-### Aiia Enterprise: for licenced customers
+[Pay & Data Environment - Sandbox JSON ⤓](./openbanking-eu.postman_environment-sandbox.json)
+
+#### Insights
+Verify Account Balance and Account Owner through our simple API. 
+
+[Insights Collection JSON ⤓](./insights.postman_collection.json)
+
+[Insights Environment - Sandbox JSON ⤓](./insights.postman_environment-sandbox.json)
+
+### For licenced customers
+If you already hold an Open Banking license, you can also use our solutions tailored for your use cases. You can get started with one line of code.
+
+#### Aiia Enterprise
 Aiia Enterprise - soon
+
+#### Insights for Enterprise
+Verify Account Balance, Account Owner and Account Income through our simple API. 
+
+[Enterprise Insights Collection JSON ⤓](./enterprise-insights.postman_collection.json)
+
+[Enterprise Insights Environment - Sandbox JSON ⤓](./enterprise-insights.postman_environment-sandbox.json)
 
 ## Run the Collection
 ### Things to Know :point_down:
@@ -29,17 +49,17 @@ Aiia Enterprise - soon
 
 3. Log in with your username/password or either a GitHub or Google account. If you don't have an account, don't worry. Click “Sign up” and create one for free.
 
-4. Create an Aiia app on the client portal
+4. Create an app on the client portal
 
-5. Go to your newly created Aiia app
+5. Go to your newly created app
 
 6. Take note of your `Client ID` and `Client Secret`
 
-> **Notice** <br>Please be aware that these credentials will only give you access to the Aiia sandbox environment and will therefore only expose _Test banks_. When you're ready to go live, go to the <a href="https://docs.aiia.eu/#/production/access" target="_blank">Production access</a> section of our documentation to learn how to get access to actual production data. 🚀
+> **Notice** <br>Please be aware that these credentials will only give you access to the sandbox environment and will therefore only expose _Test banks_. When you're ready to go live, go to the <a href="https://docs.aiia.eu/#/production/access" target="_blank">Production access</a> section of our documentation to learn how to get access to actual production data. 🚀
 
 ### Import or Fork the Collection
 1. Click here: [<img src=https://run.pstmn.io/button.svg alt="Run In Postman" style="width: 128px; height: 32px;">](https://god.gw.postman.com/run-collection/26779181-558ad9cb-2a75-4d35-a7d6-615ba148bb66?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D26779181-558ad9cb-2a75-4d35-a7d6-615ba148bb66%26entityType%3Dcollection%26workspaceId%3Ddc9c22f1-d88f-417d-8a88-662dba528689#?env%5BMastercard%20Open%20Banking%20EU%20Environment%20-%20Aiia%20Demo%5D=W3sia2V5IjoiYmFzZV91cmwiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLXNhbmRib3guYWlpYS5ldSIsInR5cGUiOiJ0ZXh0IiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJjbGllbnRfaWQiLCJ2YWx1ZSI6IiIsInR5cGUiOiJ0ZXh0IiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJjbGllbnRfc2VjcmV0IiwidmFsdWUiOiIiLCJ0eXBlIjoidGV4dCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiY2xpZW50X3JlZGlyZWN0X3VyaSIsInZhbHVlIjoiIiwidHlwZSI6InRleHQiLCJlbmFibGVkIjp0cnVlfV0=)
-2. Select the Aiia environment (top right) and update `client_id`, `client_secret` and `client_redirect_uri` variables. We'll talk about these in more detail in the next section.
+2. Select the environment (top right) and update `client_id`, `client_secret` and `client_redirect_uri` variables. We'll talk about these in more detail in the next section.
 3. Click _Send_ on individual requests
 4. Explore the various folders and update the collection as you wish
 
@@ -61,7 +81,7 @@ Now it’s time to connect your first user. In this example, the user is asked t
 
 The `redirect_uri` is where the user will be redirected to after finishing the log-in flow. This needs to match one of the redirects you specified when you created your application on the [developer portal](https://portal.aiia.eu/). For more details on how to onboard users and what functionality you can request, please check out [connect flow](https://docs.aiia.eu/#/auth/flow/) and [scopes](https://docs.aiia.eu/#/auth/scopes/).
 
-> **Notice** <br>Aiia's connect flow is very similar to the OAuth flow, which you might be familiar with. To access your end users' transaction data, we need to get their consent. We also need an additional consent to pass that data on to you.
+> **Notice** <br>Connect flow is very similar to the OAuth flow, which you might be familiar with. To access your end users' transaction data, we need to get their consent. We also need an additional consent to pass that data on to you.
 
 The response will be a `302 (Found or Moved Temporarily)` that you'll need to follow in order to redirect the user. Please look in the location header to figure out where you should redirect the user to.
 
@@ -71,7 +91,7 @@ The response will be a `302 (Found or Moved Temporarily)` that you'll need to fo
 
 ### Step 2 – Register users
 
-After navigating the user to the connect URL, the user signs up with Aiia and connects their accounts. This consists of the following steps:
+After navigating the user to the connect URL, the user signs up and connects their accounts. This consists of the following steps:
 
 1. Enter email address
 
