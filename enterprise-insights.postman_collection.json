@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "87d3a2e4-93ee-4b99-a87c-f426dc7d441d",
-		"name": "Open Banking Enterprise Insights",
+		"name": "Mastercard Open Banking EU Enterprise Insights",
 		"description": "There are four products made available under Insights (Enterprise) for businesses  \nseeking to leverage Aiia’s license for account information services.\n\n1. **Account Owner Verification:** Verify bank account ownership in real-time  \n    leveraging our open banking account information service which retrieves the  \n    account holder's name, account number and produces a name match  \n    comparison score. Name matching is optional.\n2. **Balance Check:** Retrieve the available and booked balance in real-time to  \n    check for sufficient funds in an account or streamline affordability  \n    assessments.\n3. **Transaction Categorization:** Make sense of messy data by using the  \n    Categorization endpoint to enrich your transactions and return up to 3 levels  \n    of granularity. Data can be ingested via either using our open banking hosted  \n    flow or through the Bring Your Data endpoint. Once categorized, and enriched,  \n    the transactional data can be more easily processed, understood and leveraged to  \n    help address your use case.\n4. **Verification of Income:** Verify an individuals income in real time by leveraging  \n    our open banking service which provides detailed insights for lenders  \n    to compliment their existing affordability assessments.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "33363128"
