@@ -16,6 +16,7 @@ Our PSD2 compliant service is an out of the box ready, no license required, no h
 
 #### Aiia Data and Aiia Pay
 Compliant and reliable Open Banking Payments & Data services from day one. 
+
 [Pay & Data Collection JSON ⤓](./openbanking-eu.postman_collection.json)
 
 [Pay & Data Environment - Sandbox JSON ⤓](./openbanking-eu.postman_environment-sandbox.json)
