@@ -1,0 +1,223 @@
+{
+	"info": {
+		"_postman_id": "87d3a2e4-93ee-4b99-a87c-f426dc7d441d",
+		"name": "🇪🇺 Mastercard Open Banking EU Enterprise Insights",
+		"description": "There are four products made available under Insights (Enterprise) for businesses  \nseeking to leverage Aiia’s license for account information services.\n\n1. **Account Owner Verification:** Verify bank account ownership in real-time  \n    leveraging our open banking account information service which retrieves the  \n    account holder's name, account number and produces a name match  \n    comparison score. Name matching is optional.\n2. **Balance Check:** Retrieve the available and booked balance in real-time to  \n    check for sufficient funds in an account or streamline affordability  \n    assessments.\n3. **Transaction Categorization:** Make sense of messy data by using the  \n    Categorization endpoint to enrich your transactions and return up to 3 levels  \n    of granularity. Data can be ingested via either using our open banking hosted  \n    flow or through the Bring Your Data endpoint. Once categorized, and enriched,  \n    the transactional data can be more easily processed, understood and leveraged to  \n    help address your use case.\n4. **Verification of Income:** Verify an individuals income in real time by leveraging  \n    our open banking service which provides detailed insights for lenders  \n    to compliment their existing affordability assessments.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33363128"
+	},
+	"item": [
+		{
+			"name": "Create Insights Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"jobId\", response.jobId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-CLIENT-ID",
+						"value": "{{X-CLIENT-ID}}",
+						"type": "text"
+					},
+					{
+						"key": "X-CLIENT-SECRET",
+						"value": "{{X-CLIENT-SECRET}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"insightsTypes\": [\r\n    \"ACCOUNT_OWNER\",\r\n    \"ACCOUNT_BALANCE\",\r\n    \"TRANSACTION_CATEGORIZATION\",\r\n    \"INCOME\"\r\n  ],\r\n  \"dataSources\": [\r\n    \"AIS\",\r\n    \"OWN\"\r\n  ],\r\n  \"accountOwner\": {\r\n    \"customerName\": \"John Doe\"\r\n  },\r\n  \"redirectUrl\": \"https://httpbin.org/get\",\r\n  \"multiBank\": false,\r\n  \"preselectedCountry\": \"GB\",\r\n  \"multiBankTimeoutPeriod\": 60\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/enterprise/insights",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"enterprise",
+						"insights"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ingest Transactions (BYOD)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-CLIENT-ID",
+						"value": "{{X-CLIENT-ID}}",
+						"type": "text"
+					},
+					{
+						"key": "X-CLIENT-SECRET",
+						"value": "{{X-CLIENT-SECRET}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"transactions\": [\r\n\t\t{\r\n\t\t\t\"transactionId\": \"70d9784d-e682-4e5b-840f-c6245d298853\",\r\n\t\t\t\"amount\": 10,\r\n\t\t\t\"currency\": \"GBP\",\r\n\t\t\t\"date\": \"2022-11-01\",\r\n\t\t\t\"description\": \"Payment for Goods\"\r\n\t\t}\r\n\t]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/enterprise/insights/{{jobId}}/accounts/{{accountId}}/transactions?ingestion_done=true",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"enterprise",
+						"insights",
+						"{{jobId}}",
+						"accounts",
+						"{{accountId}}",
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "ingestion_done",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Insights Status",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-CLIENT-ID",
+						"value": "{{X-CLIENT-ID}}",
+						"type": "text"
+					},
+					{
+						"key": "X-CLIENT-SECRET",
+						"value": "{{X-CLIENT-SECRET}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/enterprise/insights/{{jobId}}/status",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"enterprise",
+						"insights",
+						"{{jobId}}",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Insights Result",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"accountId\", response.transactionCategorization.accountDetails[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-CLIENT-ID",
+						"value": "{{X-CLIENT-ID}}",
+						"type": "text"
+					},
+					{
+						"key": "X-CLIENT-SECRET",
+						"value": "{{X-CLIENT-SECRET}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/enterprise/insights/{{jobId}}/results",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"enterprise",
+						"insights",
+						"{{jobId}}",
+						"results"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Insights Transactions Result",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-CLIENT-ID",
+						"value": "{{X-CLIENT-ID}}",
+						"type": "text"
+					},
+					{
+						"key": "X-CLIENT-SECRET",
+						"value": "{{X-CLIENT-SECRET}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/enterprise/insights/{{jobId}}/results/{{accountId}}/transactions",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"enterprise",
+						"insights",
+						"{{jobId}}",
+						"results",
+						"{{accountId}}",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
