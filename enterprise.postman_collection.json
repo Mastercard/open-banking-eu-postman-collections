@@ -1,0 +1,1162 @@
+{
+	"info": {
+		"_postman_id": "178cddf7-8095-4cbf-bdb9-5bfe5cf4a18b",
+		"name": "🇪🇺 Mastercard Open Banking EU Enterprise",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31662068"
+	},
+	"item": [
+		{
+			"name": "Connect",
+			"item": [
+				{
+					"name": "Initialize Authentication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"",
+									"pm.test(\"authUrl\", () => {",
+									"    pm.expect(response).to.have.property(\"authUrl\");",
+									"    pm.expect(response).to.have.property(\"sessionId\");",
+									"});",
+									"",
+									"pm.environment.set(\"authUrl\", response.authUrl);",
+									"pm.environment.set(\"sessionId\", response.sessionId);",
+									"",
+									"function embeddedConnectFlow(url) {",
+									"    if (!url) return;",
+									"    pm.visualizer.set(`<div style=\"padding: 1rem; background: white;\">",
+									"    <h5>Connect Flow</h5>",
+									"    <p><button onclick=\"location.assign('{{url}}')\">Open in Postman</button> &nbsp;",
+									"       <button onclick=\"setClipboard('{{url}}')\">Copy URL</button> <span style=\"display: none; font-size: 1em\" id=\"cmsg\">✅</span></p>",
+									"    <pre style=\"font-size: 0.8em\">{{url}}</pre>",
+									"    <script>function setClipboard(text) {",
+									"        navigator.clipboard.write([new ClipboardItem({ \"text/plain\": new Blob([text], { type:\"text/plain\" }) })]).then(() => {",
+									"            cmsg.style.display = ''; setTimeout(() => cmsg.style.display = 'none', 1000); });",
+									"    }</script>",
+									"   </div>`, { url });",
+									"}",
+									"",
+									"embeddedConnectFlow(response.authUrl);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userHash\": \"aiia-postman-demo\",\n    \"redirectUrl\": \"https://httpbin.org/anything\",\n    \"language\": \"en\"\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v1/authentication/initialize",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"authentication",
+								"initialize"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authentication Status (for polling)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var code = pm.response.json().code;",
+									"pm.environment.set(\"code\", code);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v1/authentication/{{sessionId}}/status",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"authentication",
+								"{{sessionId}}",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Token Exchange",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = pm.response.json()",
+									"",
+									"pm.environment.set(\"accessToken\", response.session.accessToken);",
+									"pm.environment.set(\"loginToken\", response.login.loginToken);",
+									"",
+									"pm.test(\"session\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"session\");",
+									"    pm.expect(jsonData.session).to.have.property(\"expires\");",
+									"    pm.expect(jsonData.session).to.have.property(\"accessToken\");",
+									"});",
+									"",
+									"pm.test(\"login\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"login\");",
+									"    pm.expect(jsonData.login).to.have.property(\"providerId\");",
+									"    pm.expect(jsonData.login).to.have.property(\"expires\");",
+									"    pm.expect(jsonData.login).to.have.property(\"loginToken\");",
+									"    pm.expect(jsonData.login).to.have.property(\"supportsUnattended\");",
+									"    pm.expect(jsonData.login).to.have.property(\"label\");",
+									"    pm.expect(jsonData.login).to.have.property(\"subjectId\");",
+									"});",
+									"",
+									"pm.test(\"providerId\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"providerId\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"code\": \"{{code}}\"\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v1/authentication/tokens",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"authentication",
+								"tokens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unattended Authentication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = pm.response.json()",
+									"",
+									"pm.environment.set(\"accessToken\", response.session.accessToken);",
+									"pm.environment.set(\"loginToken\", response.login.loginToken);",
+									"",
+									"pm.test(\"success\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"success\");",
+									"});",
+									"",
+									"pm.test(\"session\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"session\");",
+									"    var session = jsonData.session;",
+									"    pm.expect(session).to.have.property(\"expires\");",
+									"    pm.expect(session).to.have.property(\"accessToken\");",
+									"});",
+									"",
+									"pm.test(\"login\", function () {",
+									"    var jsonData = pm.response.json(); ",
+									"    pm.expect(jsonData).to.have.property(\"login\");",
+									"    var login = jsonData.login;",
+									"    pm.expect(login).to.have.property(\"providerId\");",
+									"    pm.expect(login).to.have.property(\"expires\");",
+									"    pm.expect(login).to.have.property(\"loginToken\");",
+									"    pm.expect(login).to.have.property(\"supportsUnattended\");",
+									"    pm.expect(login).to.have.property(\"label\");",
+									"    pm.expect(login).to.have.property(\"subjectId\");",
+									"});",
+									"",
+									"pm.test(\"providerId\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"providerId\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userHash\": \"aiia-postman-demo\",\n\t\"loginToken\": \"{{loginToken}}\"\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v1/authentication/unattended",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"authentication",
+								"unattended"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Data",
+			"item": [
+				{
+					"name": "List Accounts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = pm.response.json()",
+									"pm.environment.set(\"accountId\", response.accounts[0].id);",
+									"pm.environment.set(\"providerId\", response.accounts[0].providerId);",
+									"",
+									"pm.test(\"accounts\", function () {",
+									"    var jsonData = pm.response.json();",
+									"   ",
+									"    pm.expect(jsonData).to.have.property(\"accounts\");",
+									"    var accounts = jsonData.accounts;",
+									"    ",
+									"    pm.expect(accounts).to.have.length(2);",
+									"    var account1 = accounts[0];",
+									"    var account2 = accounts[1];",
+									"    ",
+									"    pm.expect(account1).to.have.property(\"id\");",
+									"    pm.expect(account1).to.have.property(\"providerId\");",
+									"    pm.expect(account1).to.have.property(\"name\");",
+									"    pm.expect(account1).to.have.property(\"number\");",
+									"    pm.expect(account1.number).to.have.property(\"bbanType\");",
+									"    pm.expect(account1.number).to.have.property(\"bban\");",
+									"    pm.expect(account1.number).to.have.property(\"iban\");",
+									"    pm.expect(account1).to.have.property(\"bookedBalance\");",
+									"    pm.expect(account1).to.have.property(\"availableBalance\");",
+									"    pm.expect(account1).to.have.property(\"currency\");",
+									"    pm.expect(account1).to.have.property(\"type\");",
+									"    pm.expect(account1).to.have.property(\"migrationVersion\");",
+									"    pm.expect(account1).to.have.property(\"isPaymentAccount\");",
+									"    ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}/v2/accounts",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v2",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Transactions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}/v2/accounts/{{accountId}}/transactions?fromDate=2021-01-01",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v2",
+								"accounts",
+								"{{accountId}}",
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "fromDate",
+									"value": "2021-01-01"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payments: Accept",
+			"item": [
+				{
+					"name": "Payer Token",
+					"item": [
+						{
+							"name": "Create Payment And Request Payer Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json()",
+											"pm.environment.set(\"paymentId\", response.paymentId);",
+											"",
+											"function embeddedConnectFlow(url) {",
+											"    if (!url) return;",
+											"    pm.visualizer.set(`<div style=\"padding: 1rem; background: white;\">",
+											"    <h5>Connect Flow</h5>",
+											"    <p><button onclick=\"location.assign('{{url}}')\">Open in Postman</button> &nbsp;",
+											"       <button onclick=\"setClipboard('{{url}}')\">Copy URL</button> <span style=\"display: none; font-size: 1em\" id=\"cmsg\">✅</span></p>",
+											"    <pre style=\"font-size: 0.8em\">{{url}}</pre>",
+											"    <script>function setClipboard(text) {",
+											"        navigator.clipboard.write([new ClipboardItem({ \"text/plain\": new Blob([text], { type:\"text/plain\" }) })]).then(() => {",
+											"            cmsg.style.display = ''; setTimeout(() => cmsg.style.display = 'none', 1000); });",
+											"    }</script>",
+											"   </div>`, { url });",
+											"}",
+											"",
+											"embeddedConnectFlow(response.redirectUrl);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"userHash\": \"aiia-postman-demo\",\n\t\"request\": {\n\t\t\"destination\": { \"bban\": { \"bankCode\": \"1234\", \"accountNumber\": \"0123456789\" }, \"name\": \"John Doe\" },\n\t\t\"amount\": { \"value\": \"2.00\", \"currency\": \"DKK\" }\n\t},\n    \"issuePayerToken\": true,\n    \"redirectUrl\": \"https://httpbin.org/anything\"\n}"
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v1/payments/create",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"payments",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Refresh Payment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v1/payments/{{paymentId}}/refresh-status",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"payments",
+										"{{paymentId}}",
+										"refresh-status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Payer Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const response = pm.response.json()",
+											"",
+											"if (response.payerToken) {",
+											"    pm.environment.set(\"payerToken\", response.payerToken);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v1/payments/{{paymentId}}/payer-token",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"payments",
+										"{{paymentId}}",
+										"payer-token"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Payment Using Payer Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json()",
+											"pm.environment.set(\"paymentId\", response.paymentId);",
+											"",
+											"function embeddedConnectFlow(url) {",
+											"    if (!url) return;",
+											"    pm.visualizer.set(`<div style=\"padding: 1rem; background: white;\">",
+											"    <h5>Connect Flow</h5>",
+											"    <p><button onclick=\"location.assign('{{url}}')\">Open in Postman</button> &nbsp;",
+											"       <button onclick=\"setClipboard('{{url}}')\">Copy URL</button> <span style=\"display: none; font-size: 1em\" id=\"cmsg\">✅</span></p>",
+											"    <pre style=\"font-size: 0.8em\">{{url}}</pre>",
+											"    <script>function setClipboard(text) {",
+											"        navigator.clipboard.write([new ClipboardItem({ \"text/plain\": new Blob([text], { type:\"text/plain\" }) })]).then(() => {",
+											"            cmsg.style.display = ''; setTimeout(() => cmsg.style.display = 'none', 1000); });",
+											"    }</script>",
+											"   </div>`, { url });",
+											"}",
+											"",
+											"embeddedConnectFlow(response.redirectUrl);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"userHash\": \"aiia-postman-demo\",\n\t\"request\": {\n\t\t\"destination\": { \"bban\": { \"bankCode\": \"1234\", \"accountNumber\": \"0123456789\" }, \"name\": \"John Doe\" },\n\t\t\"amount\": { \"value\": \"2.00\", \"currency\": \"DKK\" }\n\t},\n    \"issuePayerToken\": true,\n    \"payerToken\": \"{{payerToken}}\",\n    \"redirectUrl\": \"https://httpbin.org/anything\"\n}"
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v1/payments/create",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"payments",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create Payment (independent)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = pm.response.json()",
+									"pm.environment.set(\"paymentId\", response.paymentId);",
+									"",
+									"function embeddedConnectFlow(url) {",
+									"    if (!url) return;",
+									"    pm.visualizer.set(`<div style=\"padding: 1rem; background: white;\">",
+									"    <h5>Connect Flow</h5>",
+									"    <p><button onclick=\"location.assign('{{url}}')\">Open in Postman</button> &nbsp;",
+									"       <button onclick=\"setClipboard('{{url}}')\">Copy URL</button> <span style=\"display: none; font-size: 1em\" id=\"cmsg\">✅</span></p>",
+									"    <pre style=\"font-size: 0.8em\">{{url}}</pre>",
+									"    <script>function setClipboard(text) {",
+									"        navigator.clipboard.write([new ClipboardItem({ \"text/plain\": new Blob([text], { type:\"text/plain\" }) })]).then(() => {",
+									"            cmsg.style.display = ''; setTimeout(() => cmsg.style.display = 'none', 1000); });",
+									"    }</script>",
+									"   </div>`, { url });",
+									"}",
+									"",
+									"embeddedConnectFlow(response.redirectUrl);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userHash\": \"aiia-postman-demo\",\n\t\"request\": {\n\t\t\"destination\": { \"bban\": { \"bankCode\": \"1234\", \"accountNumber\": \"0123456789\" }, \"name\": \"John Doe\" },\n\t\t\"amount\": { \"value\": \"2.00\", \"currency\": \"DKK\" }\n\t},\n    \"redirectUrl\": \"https://httpbin.org/anything\"\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v1/payments/create",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"payments",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Payment Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v1/payments/{{paymentId}}/refresh-status",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"payments",
+								"{{paymentId}}",
+								"refresh-status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payments: Payouts",
+			"item": [
+				{
+					"name": "Create Payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()",
+									"pm.test('hasPaymentId', () => pm.expect(response.payment).to.have.property('paymentId'));",
+									"",
+									"const paymentIds = JSON.parse(pm.environment.get(\"paymentIds\") || '[]');",
+									"paymentIds.push(response.payment.paymentId);",
+									"pm.environment.set(\"paymentIds\", JSON.stringify(paymentIds));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"request\": {\n\t\t\"sourceAccountId\": \"{{accountId}}\",\n\t\t\"destination\": {\"bban\": {\"bankCode\": \"1234\", \"accountNumber\": \"0123456789\"}, \"name\": \"John Doe\"},\n\t\t\"amount\": { \"value\": \"5\", \"currency\": \"DKK\" }\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v2/payments",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v2",
+								"payments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Authorization (with session)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"pm.test('authorizationId', () => pm.expect(response).to.have.property('authorizationId'));",
+									"",
+									"if (response.authorizationId) {",
+									"    pm.environment.set(\"authorizationId\", response.authorizationId);",
+									"    pm.environment.set('paymentIds', ''); // reset state for next run",
+									"}",
+									"",
+									"function embeddedConnectFlow(url) {",
+									"    if (!url) return;",
+									"    pm.visualizer.set(`<div style=\"padding: 1rem; background: white;\">",
+									"    <h5>Connect Flow</h5>",
+									"    <p><button onclick=\"location.assign('{{url}}')\">Open in Postman</button> &nbsp;",
+									"       <button onclick=\"setClipboard('{{url}}')\">Copy URL</button> <span style=\"display: none; font-size: 1em\" id=\"cmsg\">✅</span></p>",
+									"    <pre style=\"font-size: 0.8em\">{{url}}</pre>",
+									"    <script>function setClipboard(text) {",
+									"        navigator.clipboard.write([new ClipboardItem({ \"text/plain\": new Blob([text], { type:\"text/plain\" }) })]).then(() => {",
+									"            cmsg.style.display = ''; setTimeout(() => cmsg.style.display = 'none', 1000); });",
+									"    }</script>",
+									"   </div>`, { url });",
+									"}",
+									"",
+									"embeddedConnectFlow(response.authorizationUrl);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"paymentIds\": {{paymentIds}},\n\t\"redirectUrl\": \"https://httpbin.org/anything\"\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v2/payment-authorizations",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v2",
+								"payment-authorizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Authorization Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v2/payment-authorizations/{{authorizationId}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v2",
+								"payment-authorizations",
+								"{{authorizationId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Payment Statuses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v2/payment-authorizations/{{authorizationId}}//refresh-payment-statuses",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v2",
+								"payment-authorizations",
+								"{{authorizationId}}",
+								"",
+								"refresh-payment-statuses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Payments from Authorization",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v2/payment-authorizations/{{authorizationId}}/payments",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v2",
+								"payment-authorizations",
+								"{{authorizationId}}",
+								"payments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categorization",
+			"item": [
+				{
+					"name": "Categorize Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n    \"accounts\": [\n        {\n            \"account\": {\n                \"id\": \"a1\",\n                \"name\": \"(not relevant)\",\n                \"number\": {},\n                \"providerId\": \"(not relevant)\",\n                \"type\": \"(not relevant)\",\n                \"features\": {},\n                \"bookedBalance\": {\n                    \"value\": 0,\n                    \"currency\": \"DKK\"\n                }\n            },\n            \"transactions\": [\n                {\n                    \"id\": \"t1\",\n                    \"date\": \"2020-09-08\",\n                    \"text\": \"Fakta\",\n                    \"type\": \"(not relevant)\",\n                    \"state\": \"(not relevant)\",\n                    \"amount\": {\n                        \"value\": \"10\",\n                        \"currency\": \"DKK\"\n                    }\n                }\n            ]\n        }\n    ]\n}\n"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v2/category-sets/pfm/categorize",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v2",
+								"category-sets",
+								"pfm",
+								"categorize"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "da,en,sv",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v2/category-sets/pfm/categories",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v2",
+								"category-sets",
+								"pfm",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Providers",
+			"item": [
+				{
+					"name": "List Providers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/v1/providers",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"providers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Provider",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/v1/providers/{{providerId}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"providers",
+								"{{providerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment Methods",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/v1/providers/{{providerId}}/payment-methods",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"providers",
+								"{{providerId}}",
+								"payment-methods"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"const clientId = pm.variables.get('clientId');",
+					"const clientSecret = pm.variables.get('clientSecret');",
+					"",
+					"if (!clientId || !clientSecret)",
+					"    throw new Error(\"Please set ClientId and ClientSecret in the environment\");",
+					"",
+					"pm.request.addHeader('X-Client-Id: ' + clientId);",
+					"pm.request.addHeader('X-Client-Secret: ' + clientSecret);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.variables.set('ecf', function embeddedConnectFlow(url) {",
+					"    pm.visualizer.set(`<div style=\"padding: 1rem; background: white;\">",
+					"    <h5>Connect Flow</h5>",
+					"    <p><button onclick=\"location.assign('{{url}}')\">Open in Postman</button> &nbsp;",
+					"       <button onclick=\"setClipboard('{{url}}')\">Copy URL</button> <span style=\"display: none; font-size: 1em\" id=\"cmsg\">✅</span></p>",
+					"    <pre style=\"font-size: 0.8em\">{{url}}</pre>",
+					"    <script>function setClipboard(text) {",
+					"        navigator.clipboard.write([new ClipboardItem({ \"text/plain\": new Blob([text], { type:\"text/plain\" }) })]).then(() => {",
+					"            cmsg.style.display = ''; setTimeout(() => cmsg.style.display = 'none', 1000); });",
+					"    }</script>",
+					"   </div>`, { url });",
+					"})"
+				]
+			}
+		}
+	]
+}
