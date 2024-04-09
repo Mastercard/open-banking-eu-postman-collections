@@ -10,6 +10,24 @@
 			"name": "Connect",
 			"item": [
 				{
+					"name": "Payload Encryption Key",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/v1/payload-encryption-key",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"payload-encryption-key"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Initialize Authentication",
 					"event": [
 						{
