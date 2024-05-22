@@ -1,0 +1,572 @@
+{
+	"info": {
+		"_postman_id": "f58f1a1c-fe6b-42c4-b38d-ea1246ad052d",
+		"name": "🇪🇺 Mastercard Open Banking EU - Webhooks",
+		"description": "# Collection to test Mastercard Open Banking EU webhooks\n\n## Setup\n\nIn environment update `webhook_callback_url` to url that expects webhooks from Mastercard. Optionally, if you have configured webhook secret and want to test it, update `webhook_secret` with your webhook secret, this will add `X-Viia-Signature` header to the request. You can check how it is generate by checking collection's `Pre-request Scripts`.\n\nNote: `X-Viia-Signature` header generation will not work correctly if request body will have postman variable (e.g. `{{$randomUUID}}`), since when accessing request body in pre-request script, postman gives raw body, before replacing these variables with actual values, so generated signature won't match the signature generated in receiving end.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32136737"
+	},
+	"item": [
+		{
+			"name": "AccountsUpdatedWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"accountsUpdatedWebhook\": {\r\n    \"consentId\": \"87f95fc9-3a4b-4e49-8b4c-e4eb70d15564\",\r\n    \"data\": {\r\n      \"changedAccounts\": [\r\n        {\r\n          \"accountId\": \"1f057c37-920c-42a9-ae37-fa2fb76f4d86\",\r\n          \"oldestTransactionChangedAt\": \"2018-12-31T23:59:59.999999999Z\",\r\n          \"transactionSpan\": \"2018-12-31T23:59:59.999999999Z/2019-12-31T23:59:59.999999999Z\",\r\n          \"transactionsChanged\": true\r\n        }\r\n      ]\r\n    },\r\n    \"event\": \"AccountsUpdated\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AccountsOrphanedWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"accountsOrphanedWebhook\": {\r\n    \"consentId\": \"87f95fc9-3a4b-4e49-8b4c-e4eb70d15564\",\r\n    \"data\":{\r\n        \"accountIds\":[\r\n        \t\"d237cd8f-cee5-477d-9f52-b61ed9118d8e\",\r\n            \"ba2e9b2e-95cf-4e63-a9df-d56be48e7a22\",\r\n            \"4182bc06-66cf-4cdf-a25a-e3b544cee22d\"\r\n         ]\r\n     },\r\n    \"event\": \"AccountsOrphaned\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AccountsUnorphanedWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"accountsUnorphanedWebhook\": {\r\n    \"consentId\": \"87f95fc9-3a4b-4e49-8b4c-e4eb70d15564\",\r\n    \"data\":{\r\n        \"accountIds\":[\r\n        \t\"d237cd8f-cee5-477d-9f52-b61ed9118d8e\",\r\n            \"ba2e9b2e-95cf-4e63-a9df-d56be48e7a22\",\r\n            \"4182bc06-66cf-4cdf-a25a-e3b544cee22d\"\r\n         ]\r\n     },\r\n    \"event\": \"AccountsUnorphaned\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AccountsVerifiedForPaymentsWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"accountsVerifiedForPaymentsWebhook\": {\r\n        \"consentId\": \"87f95fc9-3a4b-4e49-8b4c-e4eb70d15564\",\r\n        \"data\": {\r\n            \"accountId\": \"1f057c37-920c-42a9-ae37-fa2fb76f4d86\",\r\n            \"verified\": true\r\n        },\r\n        \"event\": \"AccountVerifiedForPayments\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConnectionUpdateRequiredWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"connectionUpdateRequiredWebhook\":{\r\n      \"consentId\":\"bb886353-1865-47ed-8170-2c668e517b69\",\r\n      \"data\":{\r\n         \"accountIds\":[\r\n            \"d237cd8f-cee5-477d-9f52-b61ed9118d8e\",\r\n            \"ba2e9b2e-95cf-4e63-a9df-d56be48e7a22\",\r\n            \"4182bc06-66cf-4cdf-a25a-e3b544cee22d\"\r\n         ],\r\n         \"expiresAt\":\"2020-01-01T00:00:00Z\",\r\n         \"reason\":\"Optional reason text\"\r\n      },\r\n      \"event\":\"ConnectionUpdateRequired\"\r\n   }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConnectionRateLimitedWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"connectionRateLimitedWebhook\":{\r\n      \"consentId\":\"bb886353-1865-47ed-8170-2c668e517b69\",\r\n      \"data\":{\r\n         \"rateLimitedUntil\":\"2019-12-12T00:00:00Z\",\r\n         \"accountIds\":[\r\n            \"d237cd8f-cee5-477d-9f52-b61ed9118d8e\",\r\n            \"ba2e9b2e-95cf-4e63-a9df-d56be48e7a22\",\r\n            \"4182bc06-66cf-4cdf-a25a-e3b544cee22d\"\r\n         ]\r\n      },\r\n      \"event\":\"ConnectionRateLimited\"\r\n   }\r\n}"
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConnectionRemovedWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"connectionRemovedWebhook\": {\r\n    \"consentId\": \"e0288a1e-97f2-462d-9a62-ce2c81cc1a2b\",\r\n    \"data\": {\r\n         \"accountIds\":[\r\n            \"d237cd8f-cee5-477d-9f52-b61ed9118d8e\",\r\n            \"ba2e9b2e-95cf-4e63-a9df-d56be48e7a22\",\r\n            \"4182bc06-66cf-4cdf-a25a-e3b544cee22d\"\r\n         ]\r\n      },\r\n    \"event\": \"ConnectionRemoved\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsentNeedsUpdateWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"consentNeedsUpdateWebhook\": {\r\n    \"consentId\": \"consentId8c1fa618-097c-4e9d-b52b-c570b3dc0b0e\",\r\n    \"data\": {\r\n      \"reason\": \"Reason\"\r\n    },\r\n    \"event\": \"ConsentNeedsUpdate\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsentRevokedWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"consentRevokedWebhook\": {\r\n    \"consentId\": \"b203e909-7223-473e-ad14-00dbf443f9b2\",\r\n    \"data\": null,\r\n    \"event\": \"ConsentRevoked\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SyncProgressUpdateWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"syncProgressUpdateWebhook\": {\r\n    \"consentId\": \"7fd37384-5e75-48cd-9010-995e0024a99a\",\r\n    \"data\": {\r\n      \"accountId\": \"df6135e7-8497-4af5-bdf1-5acd2ed7b73e\"\r\n    },\r\n    \"event\": \"SyncProgressUpdate\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SyncDoneWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"syncDoneWebhook\": {\r\n    \"consentId\": \"f4188059-7a26-4fc9-8e35-15fbef2dfb9f\",\r\n    \"data\": {\r\n      \"syncedAccountIds\": [\r\n        \"f597a626-0a87-48a4-a4d8-f79c8e26460b\",\r\n        \"4c0ac01b-ba08-4647-85b9-f98b48c3d4a4\",\r\n        \"0691206c-665b-46e6-807a-1b7f10cbdfd0\"\r\n      ]\r\n    },\r\n    \"event\": \"SyncDone\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PaymentAuthorizationCreatedWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"paymentAuthorizationCreatedWebhook\": {\r\n        \"consentId\": \"87f95fc9-3a4b-4e49-8b4c-e4eb70d15564\",\r\n        \"data\": {\r\n            \"accountId\": \"1f057c37-920c-42a9-ae37-fa2fb76f4d86\",\r\n            \"paymentAuthorizationId\": \"20200710.5x5tcnpm7atw5xm7nh3xwfi33h\"\r\n        },\r\n        \"event\": \"PaymentAuthorizationCreated\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PaymentAuthorizationUpdatedWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"paymentAuthorizationUpdatedWebhook\": {\r\n        \"consentId\": \"87f95fc9-3a4b-4e49-8b4c-e4eb70d15564\",\r\n        \"data\": {\r\n            \"accountId\": \"1f057c37-920c-42a9-ae37-fa2fb76f4d86\",\r\n            \"paymentAuthorizationId\": \"20200710.nn4efa6kmszwtxdmfc4o7zrksa\"\r\n        },\r\n        \"event\": \"PaymentAuthorizationPaymentsUpdated\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PaymentCreatedWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"paymentCreatedWebhook\": {\r\n        \"consentId\": \"87f95fc9-3a4b-4e49-8b4c-e4eb70d15564\",\r\n        \"data\": {\r\n            \"accountId\": \"d237cd8f-cee5-477d-9f52-b61ed9118d8e\",\r\n            \"paymentId\": \"20200710.abcdefghijklmnoprstuvwxyz0123456789\",\r\n            \"paymentType\": \"Inbound\"\r\n        },\r\n        \"event\": \"PaymentCreated\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PaymentUpdatedWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"paymentCreatedWebhook\": {\r\n        \"consentId\": \"87f95fc9-3a4b-4e49-8b4c-e4eb70d15564\",\r\n        \"data\": {\r\n            \"accountId\": \"d237cd8f-cee5-477d-9f52-b61ed9118d8e\",\r\n            \"paymentId\": \"20200710.abcdefghijklmnoprstuvwxyz0123456789\",\r\n            \"paymentType\": \"Outbound\"\r\n        },\r\n        \"event\": \"PaymentCreated\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AcceptPaymentCreatedWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"acceptPaymentCreatedWebhook\": {\r\n        \"data\": {\r\n            \"paymentId\": \"20200710.cys5ihh856sw7btuoimya551nh\"\r\n        },\r\n        \"event\": \"PaymentCreated\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AcceptPaymentUpdatedWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"acceptPaymentUpdatedWebhook\": {\r\n        \"data\": {\r\n            \"paymentId\": \"20200710.cys5ihh856sw7btuoimya551nh\"\r\n        },\r\n        \"event\": \"PaymentUpdated\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AccountNumberShareAgreementAcceptedWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"accountNumberShareAgreementAcceptedWebhook\": {\r\n        \"consentId\": \"87f95fc9-3a4b-4e49-8b4c-e4eb70d15564\",\r\n        \"data\": {\r\n            \"paymentId\": \"20200710.abcdefghijklmnoprstuvwxyz0123456789\"\r\n        },\r\n        \"event\": \"AccountNumberShareAgreementAccepted\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PaymentLinkStatusUpdatedWebhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"paymentLinkStatusUpdatedWebhook\": {\r\n\t\t\"data\": {\r\n\t\t\t\"paymentLinkId\": \"20240514.6hk4bttbddfrfejzo8b668nuze\",\r\n\t\t\t\"paymentLinkStatus\": \"Initiated\"\r\n\t\t},\r\n\t\t\"event\": \"PaymentLinkStatusUpdated\"\r\n\t}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"var secret = pm.environment.get('webhook_secret');",
+					"console.log('secret fetched: ' + secret);",
+					"",
+					"if(secret && secret.length !== 0) ",
+					"{",
+					"    var signature = generateSignature(pm.request.body.raw, secret);",
+					"    pm.request.headers.upsert({key: 'X-Viia-Signature', value: signature});",
+					"} else {",
+					"    pm.request.headers.remove('X-Viia-Signature');",
+					"}",
+					"",
+					"function generateSignature(body, secret) {",
+					"    var signatureHashObj = CryptoJS.HmacSHA256(body, secret);",
+					"    return signatureHashObj.toString().replace(/-/g, '');",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
