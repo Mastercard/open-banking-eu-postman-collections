@@ -21,6 +21,8 @@ Compliant and reliable Open Banking Payments & Data services from day one.
 
 [Pay & Data Environment - Sandbox JSON ⤓](./openbanking-eu.postman_environment-sandbox.json)
 
+[Pay & Data Webhooks JSON ⤓](./openbanking-eu.postman_webhooks.json)
+
 #### Insights
 Verify Account Balance and Account Owner through our simple API. 
 
