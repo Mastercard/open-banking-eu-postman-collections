@@ -1,0 +1,68 @@
+{
+	"info": {
+		"_postman_id": "f73e8ee2-20ad-408d-910f-dc0c78b4b3e5",
+		"name": "MCOBS EU - Webhooks",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30010138"
+	},
+	"item": [
+		{
+			"name": "AcceptPaymentStatusUpdated",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AiiaStorage-Signature",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"paymentId\": \"acb29db6-70df-4c99-888c-d8485cd40c3d\",\n        \"executionTime\": \"2024-01-01T12:34:56.123456+00:00\"\n    },\n    \"retryCount\": 0,\n    \"type\": \"AcceptPaymentStatusUpdated\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MandateStatusUpdated",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AiiaStorage-Signature",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"mandateId\": \"acb29db6-70df-4c99-888c-d8485cd40c3d\",\n        \"executionTime\": \"2024-01-01T12:34:56.123456+00:00\"\n    },\n    \"retryCount\": 0,\n    \"type\": \"MandateStatusUpdated\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{webhook_callback_url}}",
+					"host": [
+						"{{webhook_callback_url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
