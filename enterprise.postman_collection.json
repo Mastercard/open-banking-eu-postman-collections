@@ -1137,6 +1137,65 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Consent",
+			"item": [
+				{
+					"name": "Fetch Consent",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loginToken\": \"{{loginToken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v2/consents",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v2",
+								"consents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke Consent",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loginToken\": \"{{loginToken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v2/consents",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v2",
+								"consents"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
