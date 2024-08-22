@@ -380,40 +380,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"var response = pm.response.json()",
-									"",
-									"pm.environment.set(\"accessToken\", response.session.accessToken);",
-									"pm.environment.set(\"loginToken\", response.login.loginToken);",
-									"",
-									"pm.test(\"success\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.have.property(\"success\");",
-									"});",
-									"",
-									"pm.test(\"session\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.have.property(\"session\");",
-									"    var session = jsonData.session;",
-									"    pm.expect(session).to.have.property(\"expires\");",
-									"    pm.expect(session).to.have.property(\"accessToken\");",
-									"});",
-									"",
-									"pm.test(\"login\", function () {",
-									"    var jsonData = pm.response.json(); ",
-									"    pm.expect(jsonData).to.have.property(\"login\");",
-									"    var login = jsonData.login;",
-									"    pm.expect(login).to.have.property(\"providerId\");",
-									"    pm.expect(login).to.have.property(\"expires\");",
-									"    pm.expect(login).to.have.property(\"loginToken\");",
-									"    pm.expect(login).to.have.property(\"supportsUnattended\");",
-									"    pm.expect(login).to.have.property(\"label\");",
-									"    pm.expect(login).to.have.property(\"subjectId\");",
-									"});",
-									"",
-									"pm.test(\"providerId\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.have.property(\"providerId\");",
-									"});"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -425,6 +392,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -432,14 +404,13 @@
 							"raw": "{\n\t\"userHash\": \"aiia-postman-demo\",\n\t\"loginToken\": \"{{loginToken}}\"\n}"
 						},
 						"url": {
-							"raw": "{{apiUrl}}/v1/authentication/unattended",
+							"raw": "{{apiUrl}}/v1/logout",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"v1",
-								"authentication",
-								"unattended"
+								"logout"
 							]
 						}
 					},
@@ -454,6 +425,11 @@
 										"name": "Content-Type",
 										"value": "application/json",
 										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}",
+										"type": "text"
 									}
 								],
 								"body": {
@@ -466,14 +442,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{apiUrl}}/v1/authentication/unattended",
+									"raw": "{{apiUrl}}/v1/logout",
 									"host": [
 										"{{apiUrl}}"
 									],
 									"path": [
 										"v1",
-										"authentication",
-										"unattended"
+										"logout"
 									]
 								}
 							},
@@ -490,7 +465,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": true,\n    \"session\": {\n        \"expires\": \"2024-01-01T00:00:00.0000000+00:00\",\n        \"accessToken\": \"ugAAAAVDaXBoZXJ0ZXh0AIAAAAAAnskVeljkfKmZ6_-dH2V20_VQcoTAqaLS0ZQPSS4pqhO6z8VeaZsvm2iYaciVm_Ec-gO2lg_ivQncrMfFWN29VNJnzV8tp0gCT990v5VoJNHm9dxjt_Mu0Z9RghuS_rcZxZVi2cc1JvB7yQMZcCHxCKpGHaM4xocQ83VYkGaG1wMFSXYAEAAAAADDu92-JOXKk-FiWYdYpIz2EEtleUlkAAAAAAAA\",\n        \"scopes\": [\n            \"Accounts\",\n            \"Payments\",\n            \"UnattendedLogin\"\n        ]\n    },\n    \"login\": {\n        \"providerId\": \"DemoBank\",\n        \"expires\": \"2025-00-00T00:00:00.0000000Z\",\n        \"loginToken\": \"eQMAAAVDaXBoZXJ0ZXh0ACkDAAAAxoNRNIUN435zzPcS7UyXckLAPTjruXjL-zWbPge-jIbFKmTe89wUHUPlN-VqsoDypCq0Ix9cdKdpembbbPcGTDC3qf42j_x5ll_XksMFnFpSYhmN5vXqedYlJu_E60aeaf4tGDE5gcpNfbG0Deid3wmbPqi8Vmz1TDmOlFuwjJIHM30-Zty-PLd2ELzdSPLaCjAQVY-ABEpTgiTiOvkF8mRECCZ9D6oaRSgVo5S2bDL8cudlcObwiYDQW0n0WxiEM1lZvdqyLGZ2NO0UcTCvfh1wE0MeM7TK-pk0sslQC-Pnx13dTO-HfD-9jnFdaKRDzKellS4j2Kc-EKD68WNG5jWBwGsAmNz030mTNnVIFJPHIfLumWoOhLmHFK4aPFUW1aQmjbGLNaQBXYN3MLFIgFVZHcK_ZKy5x1T-9Vmi8byR1cmmyWoHUPIBn_LRltU6hxww3PF74oa_tqFu_vuTOPLZuu2hhjPqzxK8wq5i3l2XQPS-co9WvmKf_FpdXRAnljO7OKjruvFzfEDLBXdn6Co-E_bsRr9x4QtL_6JVgnKNAd4UjrgzRQB2mRK3sM2tVpG6rxMOTo8FBLhXbdxeidCUfhkLn53cZpCYt1NBQkn5YULZSfFycDCaAeHyGuf4AQK69d4pN7fHABVDXXoTbpwz4qk9V2EEO5c1QJZHGTU7cmRpm8kYQaR0IQhCItKn6MmH4AL6_2fDR4Z3ADt9txSy_54G5HopRZ2nFoMChMfUyH298lvTutJRjwy2oG2mBu6DdKw_vuHwuhdy7vXq52D059CDsIE5KMXFS9EnkxWeuKIjinIxmBZ1K2w3qrLJOYIBAGbitt0z9G0bYmDEYsienfrTGUsoDerj20C1TzjhFdOpzdZFLgnIi0Y5-lDAGVzJXGYxwy_VJuQH1Gq1zlvwb550f9oPiXvTQct4Up74jzd6QfCjH1slVIfIemWX2DZ7wMEC0vpLqkKhS_onP0KGCbOgcWg4AaLTfaOAHg-7m05E0IcArFYTt5Uf0I-UXvOl2PeiA4z1sFukDKVsIj6OMbjJJ__hw-KOAUu-fcsKXZ4VhB7w_5cFSXYADAAAAAARAhdZzAF0nqVKS7gQS2V5SWQAZbE0AQVUYWcAEAAAAAB1oWacxnqYvB5PhG5srTWbAA\",\n        \"supportsUnattended\": true,\n        \"label\": \"DemoBank, user 1, created 1/1/2024 12:00:00 PM\",\n        \"subjectId\": \"4f55cd028c0451c7f4a1177abe9bb79a83a9af12752c1961efdff398ed3be0ad\",\n        \"aisScaExpires\": \"2024-01-01T12:00:00.000+00:00\"\n    },\n    \"providerId\": \"DemoBank\"\n}"
+							"body": "{}"
 						}
 					]
 				},
