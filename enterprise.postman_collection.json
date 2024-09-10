@@ -7,10 +7,10 @@
 	},
 	"item": [
 		{
-			"name": "Connect",
+			"name": "Authentication",
 			"item": [
 				{
-					"name": "Payload Encryption Key",
+					"name": "Get Payload Encryption Key",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -25,10 +25,42 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Payload Encryption Key",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apiUrl}}/v1/payload-encryption-key",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"payload-encryption-key"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"serverPublicKey\": {\n        \"kid\": \"Primary\",\n        \"kty\": \"RSA\",\n        \"n\": \"wk8-KY9zqenW3EA-kaE1vQLPrHv9nVVUhnbiAAcn1By65uOxgvj4_oEvxRswU-KZbWjlW7T28saArt9dNNkIvrIE_58YVElmsTKCNtmV0OQOYcYTtMhdqimH3mdIoebXfzq69sH2PKQ0n8shOo2CORhR2Zedz7Ueo_XB48AALZ4hoC_IeT4wXT7m5xSI8Oj4qgM6BtWsIjvIR_68jiHBfOwxHsvq0e9zXlUhXuvlGFUUqVBI47RZpOTB_9NqDyvv1D6TTiCW4_PKgVbHG36SJnyvDp-A1p3xcc51QqOamdR2hDCfxBwAHqaLNLrd6QX5hKR6HV5Ti-pOxrxdgp3hsQ\",\n        \"e\": \"AQAB\"\n    }\n}"
+						}
+					]
 				},
 				{
-					"name": "Initialize Authentication",
+					"name": "Start a supervised login",
 					"event": [
 						{
 							"listen": "test",
@@ -88,55 +120,59 @@
 							]
 						}
 					},
-					"response": []
-				},
-				{
-					"name": "Authentication Status (for polling)",
-					"event": [
+					"response": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var code = pm.response.json().code;",
-									"pm.environment.set(\"code\", code);",
-									""
+							"name": "Start a supervised login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
 								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{apiUrl}}/v1/authentication/{{sessionId}}/status",
-							"host": [
-								"{{apiUrl}}"
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userHash\": \"aiia-postman-demo\",\n    \"redirectUrl\": \"https://httpbin.org/anything\",\n    \"language\": \"en\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v1/authentication/initialize",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"authentication",
+										"initialize"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
 							],
-							"path": [
-								"v1",
-								"authentication",
-								"{{sessionId}}",
-								"status"
-							]
+							"cookie": [],
+							"body": "{\n    \"authUrl\": \"https://auth.nordicapigateway.com/v1/authentication/start?startToken=ugAAAAVDaXBoZXJ0ZXh0AIAAAAAApZVfkdjxzsulWudnAU2n2WdBn8Vgbeoi_hrPrlquO_haHfpeTlgRnMelOpHbzgKT17BlzgHy9Bs-rNarGcYHv6YKg4go5pAqYyKD94laT0nx68Nj1nnwYggyI06FuMgImd-qJZLQpbjUZHNWCKVaU3RnuqA2JHUHyHA8AVruSy0FSXYAEAAAAADsjhf6ciNG-ywKiMM5WSCWEEtleUlkAAAAAAAA\",\n    \"sessionId\": \"ugAAAAVDaXBoZXJ0ZXh0AIAAAAAASM_8Rw5BSZA2NUpioKA3ArW0wDSh9bzUwOoTPtOj3D2xuwWouanuHw3U05Q8nT-OYIvinf3Rfw_we1EXvBNNAkH4OhZKX6cbv0jbb3tsrUr_tycBhHUJJ3i92E3CBpuZxaX2NoBKm6hD3aZ-wG6mCk3Pfoo5ujuq_FmUvGj5OcAFSXYAEAAAAAAhxrLiy-I4RGydp1odplcrEEtleUlkAAAAAAAA\"\n}"
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Token Exchange",
+					"name": "Get tokens after supervised login",
 					"event": [
 						{
 							"listen": "test",
@@ -198,10 +234,243 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get tokens after supervised login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\": \"{{code}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v1/authentication/tokens",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"authentication",
+										"tokens"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"session\": {\n        \"expires\": \"2024-01-01T12:00:00.000+00:00\",\n        \"accessToken\": \"ugAAAAVDaXBoZXJ0ZXh0AIAAAAAAJCaJUqD-9Oz8Jqdc8TO7qk-ECkxxoBDLQDGx7D5YjoOtQNQu7iJ1goH2w7b7PW0Q_RPgttpwAr7vy_HD2ahfXz9C_kS0itQqn-YaflK_q6NdNDIKq6aUbh261ks9fd-f_cFgFPKfWRdXhQF9ISesB3wwWqb_dUQ5bR660J8LeGIFSXYAEAAAAAAPTB4juqQDr3DieKHZ0tDGEEtleUlkAAAAAAAA\",\n        \"scopes\": [\n            \"Accounts\",\n            \"Payments\",\n            \"UnattendedLogin\"\n        ]\n    },\n    \"login\": {\n        \"providerId\": \"sample_provider_id\",\n        \"expires\": \"2025-01-00T12:00:00.0000000Z\",\n        \"loginToken\": \"eQMAAAVDaXBoZXJ0ZXh0ACkDAAAA-5WyygVglFTPABFFI96Mc5NdBHLeoTk5dQaLd2IzOohsSzvYald-pz55dTYeWqFCfXVEdxNnxH0f7XHLfGty6Jq7o32NIDt3s7_TcpXSXpe4I72hs9LYBHFT940HxWqFOiToTh-tsCreq1SkYRFhQT_qe16CAy25L2sunT1k7GTU0As_yAOC9ih7A5H1Kfz3xHQvQRGsx10QBiiDh12GzfnsZEmbXMuK9LlVG_ZSLwQQwNqNnGcalIZJuk05Jny92WajfJrZLmWd4YQ2UeqNaN016q6EfUnrVCfH9cie6N170iHhsaQ5fE4MAdWAl8R-i9Je3J72nm3cHrUoL547VOMqBZ7KESHO0n_mzsLVLPCCkuqWMlTVZb0XOd2nBFfALQJgYMTicq0jV2ziI6Grw2IgyYu7NexYxseHKTgRCCpdMyZYhbMr1iEEefN_7OeKjnV2ePMZSdAp_NkvkSDXLKqX0GkyBPUhkWnnwET6gzdf1ajHSMnHlTFzdNj7l9WvFmThtJT8Qm8t4UhKkl96M-f07Nnptr0aOoieHj-N0o4ZzHl_sj_SbEQl4jOMO4tDL9Fed3wKBtEucy36cN2sVNvkI7q3tgAfhiTEKmlDR2SMfAvHII74kruWDrkn9Nx-xAg67eKksSTCkWOQpvwQLi-4KePFApNXMWWdaXnPd5TynUSeJWjAfvOSZQhaeHYIGonP5yMuW0eEfWOiQJcepY109mmfqFt28Sx2joHHsFWBw31s7HZS9NIkdcMFGzfkNxfNdBeZjk2hPXQkoC8RCpdmHVpkpR9sukg_Yk7-JPgqtJXjbaoVujlgPLk-Gc51TSUlEoy_G_2cpOK5XZ7RqLFOBFl0Nj0WOhdQv4k44UYcsWDjuzU-ynfB-82kK5mRUwdBdS67F_A710UFhNJkcAXQUne13X45Y1zdzumtKh9Z2uDy3yZmVVGZZBhFYDFQId5V3a48PIQWMAzlU9i1RaQ5YSMDbcDAtja-6Avv3p7PWJX_dbNFA-zHqESheLL-_eqvIIFwMivb7G6eQIB6KtI5Dzyhrbg_JzXOTqR02z1SqoRPnnSdj4cFSXYADAAAAADWiSrSrzHuYpqK0I4QS2V5SWQAZbE0AQVUYWcAEAAAAABCRScC3Zud3R9JpbZn-eOFAA\",\n        \"supportsUnattended\": true,\n        \"label\": \"sample_provider_id, user 1, created 01/01/2024 12:00:00 PM\",\n        \"subjectId\": \"4f55cd028c0451c7f4a1177abe9bb79a83a9af12752c1961efdff398ed3be0ad\",\n        \"aisScaExpires\": \"2024-01-01T12:00:00.000+00:00\"\n    },\n    \"providerId\": \"sample_provider_id\",\n    \"state\": null\n}"
+						}
+					]
 				},
 				{
-					"name": "Unattended Authentication",
+					"name": "Get authentication status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var code = pm.response.json().code;",
+									"pm.environment.set(\"code\", code);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v1/authentication/{{sessionId}}/status",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"authentication",
+								"{{sessionId}}",
+								"status"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get authentication status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v1/authentication/{{sessionId}}/status",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"authentication",
+										"{{sessionId}}",
+										"status"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"state\": \"Succeeded\",\n    \"code\": \"ygAAAAVDaXBoZXJ0ZXh0AJAAAAAAAc8iu4CYbguipi6eYlBdspOezZQps1vf-JrIhbn1E61aIAPypvc4nsM838b152IPEqzsU-hU-LnpagrqMzuBmrl7Avk9W5jIGfEkzhMqWJgtdV-edx5PxOpZdh-dmwhXYuBMVQcQhf04b7rVpA8bSzMbydYuo3tzcTC60xn3eMAy5siuTMKGlCoVHstufQh0BUl2ABAAAAAAB5e8iFBviUO6jjbGHIyFJhBLZXlJZAAAAAAAAA\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userHash\": \"aiia-postman-demo\",\n\t\"loginToken\": \"{{loginToken}}\"\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v1/logout",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"logout"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Logout",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"userHash\": \"aiia-postman-demo\",\n\t\"loginToken\": \"{{loginToken}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v1/logout",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						}
+					]
+				},
+				{
+					"name": "Perform an unattended login",
 					"event": [
 						{
 							"listen": "test",
@@ -270,15 +539,258 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Perform an unattended login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"userHash\": \"aiia-postman-demo\",\n\t\"loginToken\": \"{{loginToken}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v1/authentication/unattended",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"authentication",
+										"unattended"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"session\": {\n        \"expires\": \"2024-01-01T00:00:00.0000000+00:00\",\n        \"accessToken\": \"ugAAAAVDaXBoZXJ0ZXh0AIAAAAAApIW3BSb2aHSo9lUULxX36wk--bTk_AyBDxPt2fyNW2y1Al6OsDM_P1KojND_2TyYEV-WK2TmkHnL2vcSVY80d2_NNsIM27nRS3EPJ_HT3JBL_jJlxjHobQUeZ7CPFIG4V-TZ21fh-vcbI_d60Eu8_Rs-3ARa_KeIErIYVOGkptwFSXYAEAAAAAD639vMH66iNOw3kMJ4BRqaEEtleUlkAAAAAAAA\",\n        \"scopes\": [\n            \"Accounts\",\n            \"Payments\",\n            \"UnattendedLogin\"\n        ]\n    },\n    \"login\": {\n        \"providerId\": \"DemoBank\",\n        \"expires\": \"2025-01-01T12:00:00.0000000Z\",\n        \"loginToken\": \"eQMAAAVDaXBoZXJ0ZXh0ACkDAAAAKmXBXnFs823yeOxsEA5ytkdqcc3vNh97EO-5FQeBVDCMpcSM-VDXDpaoInMlQ7np3JMxOh_QxpxuM-D3KXB4AEot5CIieJhfkKzIwmg7l3DlTwpYNu7TLHY-OTETq31AmnV70ddjUfHMroUrlV20RmdX_TsWc5c_y3iFPSHDCqel_CssATzcytG__mVbp7fXihnWy6Y_IlszhW0O9VWWU-DAqds5OXBxPQuDEU3hhg7P-Db0YJyg_XUspvG9JGMC8BknMeC5RwUM1_Dga4nrpoYNn4zYoackq0oCzUVrtuJ8DFOUdob9JB5ERUEZAse-QIOBKJ2plj3X-tBriAH8daIf-Rdj45P-dCpaTLkd32RrOjJn81liRMGXDZnQk6kKxXto_ux186ZbJyxU8wseXR-2-IPj52Glg4WAgBzazY4MXQb8IBbf1KmQAfBPgLc9GugfajwzOcu3f4vEbbRfLJjZ10HvMqS8AwcK7Jx1e5Sn_yWMz7P0PHisvc07GVsqNz1_gI8wpXdu657nY0tWQQlibM_UQ-970k8CRF74adEgUC90wa8mVDNA_pHh_xOTxQFtJ5bR5ajxB7jeS2X1t7lwbAMujV6miptaEAyz3Wq6-GVDSX2ZqtQj4xmlYt01R8kvKMBSSFEuSRI2u-qVuLE15_L0_c8hPRzcGiXheuNn_eciPQ-CsTKXWM5X1NSEX2f6DBjOEwh08HG9HTfsgWblYWcHbOe5oK2EzbVqVyOzspItuhUmHSS-5VmkRwkG2Z_us6l15_nZ9XgUIb-YJYZvYYDCd8jZdC1ia6SmHu9Jol-Q-fQuHx_9Tm_cRBTKe1KbQ_6HFIqtY4S82EpwplTXjE9oXhNdhmAqTOE9j2RIhxZcpiUUEaHMK5tRMlKX4EUv_PHzFjm6ewy4pjmVfax1vQU59dAFCvfMKek-JLIBJP9aYMFZ4OGSWWpyslg71-zaXxk6gBBsWXO-863WZ498nbAfjgyROnK822zOVcCBH_UtKyISfPKVoKW1tSE_qRwWqO_FSvJYxmV62pOBYhcZaK0-hQ9yXjQCL7XU4yjNok1qzduTbS4FSXYADAAAAAD96JXKbRBP-dvUV5cQS2V5SWQAZbE0AQVUYWcAEAAAAAAVpYiQAu5oCeIFKWZgklNzAA\",\n        \"supportsUnattended\": true,\n        \"label\": \"DemoBank, user 1, created 1/1/2024 12:00:00 PM\",\n        \"subjectId\": \"4f55cd028c0451c7f4a1177abe9bb79a83a9af12752c1961efdff398ed3be0ad\",\n        \"aisScaExpires\": \"2024-11-18T12:22:42.807+00:00\"\n    },\n    \"providerId\": \"DemoBank\"\n}"
+						}
+					]
 				}
-			]
+			],
+			"description": "Endpoints for authenticating with the API."
 		},
 		{
-			"name": "Data",
+			"name": "Providers",
 			"item": [
 				{
-					"name": "List Accounts",
+					"name": "List all providers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/v1/providers",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"providers"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List all providers",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apiUrl}}/v1/providers",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"providers"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"DemoBank\",\n        \"name\": \"Demo Bank\",\n        \"countryCode\": \"DK\",\n        \"status\": {\n            \"syncMode\": \"Full\",\n            \"tryAgain\": null,\n            \"updated\": \"2024-01-01T00:00:00.0000000Z\",\n            \"message\": null\n        },\n        \"presentation\": {\n            \"priority\": 1000,\n            \"aliases\": null,\n            \"color\": \"#13C081\",\n            \"logos\": {\n                \"large\": {\n                    \"png\": \"https://cdn.nordicapigateway.com/providers/DemoBank.png\",\n                    \"svg\": \"https://cdn.nordicapigateway.com/providers/DemoBank.svg\"\n                },\n                \"round\": null\n            }\n        },\n        \"paymentMethods\": {\n            \"domestic\": {\n                \"executionTypes\": [\n                    \"Normal\",\n                    \"Instant\",\n                    \"SpecificDate\"\n                ]\n            },\n            \"international\": null,\n            \"inpaymentForm\": null,\n            \"sepa\": null\n        },\n        \"audiences\": [\n            \"Private\",\n            \"Business\"\n        ],\n        \"paymentAuthorization\": {\n            \"paymentsAllowedPerAuthorization\": 1\n        },\n        \"paymentReconciliation\": {\n            \"reconciliationEnabled\": false\n        }\n    },\n    {\n        \"id\": \"DK_TestBank\",\n        \"name\": \"Test Bank\",\n        \"countryCode\": \"DK\",\n        \"status\": {\n            \"syncMode\": \"Full\",\n            \"tryAgain\": null,\n            \"updated\": \"2024-08-20T13:00:03.4654973Z\",\n            \"message\": null\n        },\n        \"presentation\": {\n            \"priority\": 999,\n            \"aliases\": null,\n            \"color\": \"#13C081\",\n            \"logos\": {\n                \"large\": {\n                    \"png\": \"https://cdn.nordicapigateway.com/providers/TestBank.png\",\n                    \"svg\": \"https://cdn.nordicapigateway.com/providers/TestBank.svg\"\n                },\n                \"round\": null\n            }\n        },\n        \"paymentMethods\": {\n            \"domestic\": {\n                \"executionTypes\": [\n                    \"Normal\",\n                    \"Instant\",\n                    \"SpecificDate\"\n                ]\n            },\n            \"international\": null,\n            \"inpaymentForm\": {\n                \"executionTypes\": [\n                    \"Normal\",\n                    \"Instant\",\n                    \"SpecificDate\"\n                ]\n            },\n            \"sepa\": null\n        },\n        \"audiences\": [\n            \"Private\",\n            \"Business\"\n        ],\n        \"paymentAuthorization\": {\n            \"paymentsAllowedPerAuthorization\": 100\n        },\n        \"paymentReconciliation\": {\n            \"reconciliationEnabled\": true\n        }\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get a provider's payment methods",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/v1/providers/{{providerId}}/payment-methods",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"providers",
+								"{{providerId}}",
+								"payment-methods"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get a provider's payment methods",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apiUrl}}/v1/providers/{{providerId}}/payment-methods",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"providers",
+										"{{providerId}}",
+										"payment-methods"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"domestic\": {\n        \"executionTypes\": [\n            \"Normal\",\n            \"Instant\",\n            \"SpecificDate\"\n        ],\n        \"properties\": null,\n        \"rules\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get a particular provider",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/v1/providers/{{providerId}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"providers",
+								"{{providerId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get a particular provider",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apiUrl}}/v1/providers/{{providerId}}",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"providers",
+										"{{providerId}}"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"DemoBank\",\n    \"name\": \"Demo Bank\",\n    \"countryCode\": \"DK\",\n    \"status\": {\n        \"syncMode\": \"Full\",\n        \"tryAgain\": null,\n        \"updated\": \"2024-01-01T00:00:00.0000000Z\",\n        \"message\": null\n    },\n    \"presentation\": {\n        \"priority\": 1000,\n        \"aliases\": null,\n        \"color\": \"#13C081\",\n        \"logos\": {\n            \"large\": {\n                \"png\": \"https://cdn.nordicapigateway.com/providers/DemoBank.png\",\n                \"svg\": \"https://cdn.nordicapigateway.com/providers/DemoBank.svg\"\n            },\n            \"round\": null\n        }\n    },\n    \"paymentMethods\": {\n        \"domestic\": {\n            \"executionTypes\": [\n                \"Normal\",\n                \"Instant\",\n                \"SpecificDate\"\n            ]\n        },\n        \"international\": null,\n        \"inpaymentForm\": null,\n        \"sepa\": null\n    },\n    \"audiences\": [\n        \"Private\",\n        \"Business\"\n    ],\n    \"paymentAuthorization\": {\n        \"paymentsAllowedPerAuthorization\": 1\n    },\n    \"paymentReconciliation\": {\n        \"reconciliationEnabled\": false\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints for fetching information about providers (e.g. banks)."
+		},
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "Get accounts",
 					"event": [
 						{
 							"listen": "test",
@@ -337,10 +849,45 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get accounts",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{apiUrl}}/v2/accounts",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v2",
+										"accounts"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accounts\": [\n        {\n            \"id\": \"account_id\",\n            \"idSchema\": \"T1-20170101\",\n            \"providerId\": \"DemoBank\",\n            \"name\": \"Checking Account\",\n            \"owner\": \"Christian Thomsen\",\n            \"addressUnstructured\": \"Skovvej 73\",\n            \"accountUsage\": \"Personal\",\n            \"psuRole\": \"AccountHolder\",\n            \"bookedBalanceDate\": \"2024-01-01T12:00:00.0000000Z\",\n            \"availableBalanceDate\": \"2024-01-01T12:00:00.00000Z\",\n            \"number\": {\n                \"bbanType\": \"DK\",\n                \"bban\": \"0001-204386946\",\n                \"iban\": \"DK9200001204386946\",\n                \"card\": null,\n                \"bbanParsed\": {\n                    \"bankCode\": \"0001\",\n                    \"accountNumber\": \"204386946\"\n                }\n            },\n            \"bookedBalance\": {\n                \"value\": 100.00,\n                \"currency\": \"DKK\"\n            },\n            \"availableBalance\": {\n                \"value\": 100.00,\n                \"currency\": \"DKK\"\n            },\n            \"type\": \"Consumption\",\n            \"features\": {\n                \"queryable\": true,\n                \"psdPaymentAccount\": true,\n                \"paymentFrom\": true,\n                \"paymentTo\": true\n            },\n            \"topUpInformation\": null,\n            \"pendingAmount\": null,\n            \"creditLimit\": null\n        },\n        {\n            \"id\": \"O-aeNXAcykCqHPG9GCBIb0V6sF7zd_h7wz40q8HJ_No.0907eba78b2c\",\n            \"idSchema\": \"T1-20170101\",\n            \"providerId\": \"DemoBank\",\n            \"name\": \"Household Account\",\n            \"owner\": \"Christian Thomsen\",\n            \"addressUnstructured\": \"Skovvej 73\",\n            \"accountUsage\": \"Personal\",\n            \"psuRole\": \"AccountHolder\",\n            \"bookedBalanceDate\": \"2024-08-20T13:04:57.1535864Z\",\n            \"availableBalanceDate\": \"2024-08-20T13:04:57.1535865Z\",\n            \"number\": {\n                \"bbanType\": \"DK\",\n                \"bban\": \"0001-245787654\",\n                \"iban\": \"DK5200001245787654\",\n                \"card\": null,\n                \"bbanParsed\": {\n                    \"bankCode\": \"0001\",\n                    \"accountNumber\": \"245787654\"\n                }\n            },\n            \"bookedBalance\": {\n                \"value\": -1000.00,\n                \"currency\": \"DKK\"\n            },\n            \"availableBalance\": {\n                \"value\": -1000.00,\n                \"currency\": \"DKK\"\n            },\n            \"type\": \"Consumption\",\n            \"features\": {\n                \"queryable\": true,\n                \"psdPaymentAccount\": true,\n                \"paymentFrom\": true,\n                \"paymentTo\": true\n            },\n            \"topUpInformation\": null,\n            \"pendingAmount\": null,\n            \"creditLimit\": null\n        }\n    ],\n    \"pagingToken\": null\n}"
+						}
+					]
 				},
 				{
-					"name": "List Transactions",
+					"name": "Get transactions",
 					"event": [
 						{
 							"listen": "test",
@@ -379,130 +926,105 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get transactions",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{apiUrl}}/v2/accounts/{{accountId}}/transactions?fromDate=2021-01-01",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v2",
+										"accounts",
+										"{{accountId}}",
+										"transactions"
+									],
+									"query": [
+										{
+											"key": "fromDate",
+											"value": "2021-01-01"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"transactions\": [\n        {\n            \"id\": \"transaction_id_1\",\n            \"idSchema\": \"T1-20170101\",\n            \"date\": \"2024-01-01\",\n            \"creationTime\": null,\n            \"text\": \"Superbest\",\n            \"originalText\": \"SUPERBEST          49383\",\n            \"details\": null,\n            \"category\": null,\n            \"amount\": {\n                \"value\": -50,\n                \"currency\": \"DKK\"\n            },\n            \"balance\": null,\n            \"type\": \"Card\",\n            \"state\": \"Reserved\"\n        },\n        {\n            \"id\": \"transaction_id_2\",\n            \"idSchema\": \"T1-20170101\",\n            \"date\": \"2024-01-01\",\n            \"creationTime\": null,\n            \"text\": \"Netto Thorvaldsens\",\n            \"originalText\": \"Netto Thorvaldsens 68954\",\n            \"details\": null,\n            \"category\": null,\n            \"amount\": {\n                \"value\": -10.00,\n                \"currency\": \"DKK\"\n            },\n            \"balance\": {\n                \"value\": 8900.00,\n                \"currency\": \"DKK\"\n            },\n            \"type\": \"Card\",\n            \"state\": \"Reserved\"\n        },\n        {\n            \"id\": \"transaction_id_3\",\n            \"idSchema\": \"T1-20170101\",\n            \"date\": \"2024-01-01\",\n            \"creationTime\": null,\n            \"text\": \"Far-East Trading\",\n            \"originalText\": \"Far-East Trading   30736\",\n            \"details\": null,\n            \"category\": null,\n            \"amount\": {\n                \"value\": -300,\n                \"currency\": \"DKK\"\n            },\n            \"balance\": {\n                \"value\": 8600.00,\n                \"currency\": \"DKK\"\n            },\n            \"type\": \"Card\",\n            \"state\": \"Booked\"\n        }\n    ],\n    \"pagingToken\": \"rAEAAAVDaXBoZXJ0ZXh0AFwBAAAAhTEvkEW88x98WqnxcuoYbsefARYlgjz71W4PFz1k0gyRp-thPC4xBARniaHLNPiTcGYGdvrGtajUODN_yJFiMP79W-IbBBDfRBVCfFKG1fKKTMX9SZA9ubJHiewCqiMN6WN_KySbywJsFDQD49Fg1s-ADNAKD8BxjMPqN_kfjCKrr3MYhd_9TUGXf3bDpcnOdTTZ2xmbFfPFUGmol7fXJ5I5vEt-RbP46Tol12rXN_IbCTChGrCwGYxp-AOn25Pgi45oyHOTiMto1jthSZAg9Av72aajhM2TslfNACiMEAnpIl-RPek535mJ0-4UAW-ssbZtwtgMUhUhS63vZnWypzqw1UIEodeUfssysar8ywncmAseTlRUw5rW1ctEdoqvmtFTXoF1Pjp16xm7XvnNLD4FJsSTXACdvOttDD6nfAT_AJ9FkP222uatIlIg5zi2zR-n19ANvE-HENJ3BUl2AAwAAAAADYseehllVM8Dnpg0EEtleUlkAGWxNAEFVGFnABAAAAAA0AfRAP4LctpsOUv_8iPNhgA\",\n    \"ordering\": \"ReverseChronological\"\n}"
+						}
+					]
 				}
-			]
+			],
+			"description": "Endpoints for fetching accounts and transactions."
 		},
 		{
-			"name": "Payments: Accept",
+			"name": "Payments",
 			"item": [
 				{
-					"name": "Payer Token",
-					"item": [
+					"name": "Get a payer token",
+					"event": [
 						{
-							"name": "Create Payment And Request Payer Token",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"var response = pm.response.json()",
-											"pm.environment.set(\"paymentId\", response.paymentId);",
-											"",
-											"function embeddedConnectFlow(url) {",
-											"    if (!url) return;",
-											"    pm.visualizer.set(`<div style=\"padding: 1rem; background: white;\">",
-											"    <h5>Connect Flow</h5>",
-											"    <p><button onclick=\"location.assign('{{url}}')\">Open in Postman</button> &nbsp;",
-											"       <button onclick=\"setClipboard('{{url}}')\">Copy URL</button> <span style=\"display: none; font-size: 1em\" id=\"cmsg\">✅</span></p>",
-											"    <pre style=\"font-size: 0.8em\">{{url}}</pre>",
-											"    <script>function setClipboard(text) {",
-											"        navigator.clipboard.write([new ClipboardItem({ \"text/plain\": new Blob([text], { type:\"text/plain\" }) })]).then(() => {",
-											"            cmsg.style.display = ''; setTimeout(() => cmsg.style.display = 'none', 1000); });",
-											"    }</script>",
-											"   </div>`, { url });",
-											"}",
-											"",
-											"embeddedConnectFlow(response.redirectUrl);"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()",
+									"",
+									"if (response.payerToken) {",
+									"    pm.environment.set(\"payerToken\", response.payerToken);",
+									"}"
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"userHash\": \"aiia-postman-demo\",\n\t\"request\": {\n\t\t\"destination\": { \"bban\": { \"bankCode\": \"1234\", \"accountNumber\": \"0123456789\" }, \"name\": \"John Doe\" },\n\t\t\"amount\": { \"value\": \"2.00\", \"currency\": \"DKK\" }\n\t},\n    \"issuePayerToken\": true,\n    \"redirectUrl\": \"https://httpbin.org/anything\"\n}"
-								},
-								"url": {
-									"raw": "{{apiUrl}}/v1/payments/create",
-									"host": [
-										"{{apiUrl}}"
-									],
-									"path": [
-										"v1",
-										"payments",
-										"create"
-									]
-								}
-							},
-							"response": []
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
 						},
-						{
-							"name": "Refresh Payment",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
+						"url": {
+							"raw": "{{apiUrl}}/v1/payments/{{paymentId}}/payer-token",
+							"host": [
+								"{{apiUrl}}"
 							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n}"
-								},
-								"url": {
-									"raw": "{{apiUrl}}/v1/payments/{{paymentId}}/refresh-status",
-									"host": [
-										"{{apiUrl}}"
-									],
-									"path": [
-										"v1",
-										"payments",
-										"{{paymentId}}",
-										"refresh-status"
-									]
-								}
-							},
-							"response": []
-						},
+							"path": [
+								"v1",
+								"payments",
+								"{{paymentId}}",
+								"payer-token"
+							]
+						}
+					},
+					"response": [
 						{
-							"name": "Get Payer Token",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"const response = pm.response.json()",
-											"",
-											"if (response.payerToken) {",
-											"    pm.environment.set(\"payerToken\", response.payerToken);",
-											"}"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
+							"name": "Get a payer token",
+							"originalRequest": {
 								"method": "POST",
 								"header": [
 									{
@@ -527,39 +1049,79 @@
 									]
 								}
 							},
-							"response": []
-						},
-						{
-							"name": "Create Payment Using Payer Token",
-							"event": [
+							"_postman_previewlanguage": "json",
+							"header": [
 								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"var response = pm.response.json()",
-											"pm.environment.set(\"paymentId\", response.paymentId);",
-											"",
-											"function embeddedConnectFlow(url) {",
-											"    if (!url) return;",
-											"    pm.visualizer.set(`<div style=\"padding: 1rem; background: white;\">",
-											"    <h5>Connect Flow</h5>",
-											"    <p><button onclick=\"location.assign('{{url}}')\">Open in Postman</button> &nbsp;",
-											"       <button onclick=\"setClipboard('{{url}}')\">Copy URL</button> <span style=\"display: none; font-size: 1em\" id=\"cmsg\">✅</span></p>",
-											"    <pre style=\"font-size: 0.8em\">{{url}}</pre>",
-											"    <script>function setClipboard(text) {",
-											"        navigator.clipboard.write([new ClipboardItem({ \"text/plain\": new Blob([text], { type:\"text/plain\" }) })]).then(() => {",
-											"            cmsg.style.display = ''; setTimeout(() => cmsg.style.display = 'none', 1000); });",
-											"    }</script>",
-											"   </div>`, { url });",
-											"}",
-											"",
-											"embeddedConnectFlow(response.redirectUrl);"
-										],
-										"type": "text/javascript"
-									}
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
 								}
 							],
-							"request": {
+							"cookie": [],
+							"body": "{\n    \"providerId\": \"DemoBank\",\n    \"redactedAccountNumber\": \"0001 ******946\",\n    \"expires\": \"2021-01-01T00:00:00.0000000+00:00\",\n    \"payerToken\": \"XgIAAAVDaXBoZXJ0ZXh0AA4CAAAAK-2HM0Xh2VJN_bscJxaypQudWBpw5KbSP-u4ZlryQKv4y6h2fGOCrCV5wUf8G_4z5D-9YmNmvZALEV9FRUvzJbvwlb2LhtjFxex88OY6AMEsL5oY1KRiP-jf-cRezX5jeNrUHZDoqL1FAUK6hheQnxrl9_v0pPe1YOxccanIv6pCjNET2g-Pg1MLoFXVdY7zcjF0U8BPlwR_Dc_9zsesEFBVP_9QI4W9syO6VmuHWu_YT_VivyA6BWeYQsmTHHIKFF3_Yd-yW0wTXAmu8RKUBOO4saaaDssz_iARKiexMAEZPWirWA0lzYSSvQvMDzEfRCvpOzUqn0OMy_4jZTBaCLHDsGQPJesUrZEObWk2337yHB56HCf6BQUAXf4jrOQtakds8eua0S6ffKBLvfXz0CX7Zl5pdLy63w9IJ3cU8zVwtvL76HJ7oBro2PQHWh8VyRD4_DDqbDSL7tU_UTsBdgqy9AnHLJPDZnFdN65FMPfyfjL3oiKAu1rmofJHO_n9C3tk5DYt_afcUjgelnq557MJdoe-WFg2w8LOg283Q14Meww82eBRmHnlrkqP_zp9gQtO0Fm8KD4xELFXzPnyBs0lencDzFG4UWLnlS-dOZKmDQtcpw-_NfkaubMKRkZSD8i-Rd3YfHul-o1HnWLQX8KF_CEIex3YeYsCqrrO1KZtUi-N44-olMlbjJekgAVJdgAMAAAAANt87pG9mOBtgi5rthBLZXlJZAA3iTQBBVRhZwAQAAAAAAmCpsaRUXhvpR_Vd-F_p5sA\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = pm.response.json()",
+									"pm.environment.set(\"paymentId\", response.paymentId);",
+									"",
+									"function embeddedConnectFlow(url) {",
+									"    if (!url) return;",
+									"    pm.visualizer.set(`<div style=\"padding: 1rem; background: white;\">",
+									"    <h5>Connect Flow</h5>",
+									"    <p><button onclick=\"location.assign('{{url}}')\">Open in Postman</button> &nbsp;",
+									"       <button onclick=\"setClipboard('{{url}}')\">Copy URL</button> <span style=\"display: none; font-size: 1em\" id=\"cmsg\">✅</span></p>",
+									"    <pre style=\"font-size: 0.8em\">{{url}}</pre>",
+									"    <script>function setClipboard(text) {",
+									"        navigator.clipboard.write([new ClipboardItem({ \"text/plain\": new Blob([text], { type:\"text/plain\" }) })]).then(() => {",
+									"            cmsg.style.display = ''; setTimeout(() => cmsg.style.display = 'none', 1000); });",
+									"    }</script>",
+									"   </div>`, { url });",
+									"}",
+									"",
+									"embeddedConnectFlow(response.redirectUrl);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userHash\": \"aiia-postman-demo\",\n\t\"request\": {\n\t\t\"destination\": { \"bban\": { \"bankCode\": \"1234\", \"accountNumber\": \"0123456789\" }, \"name\": \"John Doe\" },\n\t\t\"amount\": { \"value\": \"2.00\", \"currency\": \"DKK\" }\n\t},\n    \"issuePayerToken\": true,\n    \"redirectUrl\": \"https://httpbin.org/anything\"\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v1/payments/create",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"payments",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create payment",
+							"originalRequest": {
 								"method": "POST",
 								"header": [
 									{
@@ -569,7 +1131,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"userHash\": \"aiia-postman-demo\",\n\t\"request\": {\n\t\t\"destination\": { \"bban\": { \"bankCode\": \"1234\", \"accountNumber\": \"0123456789\" }, \"name\": \"John Doe\" },\n\t\t\"amount\": { \"value\": \"2.00\", \"currency\": \"DKK\" }\n\t},\n    \"issuePayerToken\": true,\n    \"payerToken\": \"{{payerToken}}\",\n    \"redirectUrl\": \"https://httpbin.org/anything\"\n}"
+									"raw": "{\n\t\"userHash\": \"aiia-postman-demo\",\n\t\"request\": {\n\t\t\"destination\": { \"bban\": { \"bankCode\": \"1234\", \"accountNumber\": \"0123456789\" }, \"name\": \"John Doe\" },\n\t\t\"amount\": { \"value\": \"2.00\", \"currency\": \"DKK\" }\n\t},\n    \"issuePayerToken\": true,\n    \"redirectUrl\": \"https://httpbin.org/anything\"\n}"
 								},
 								"url": {
 									"raw": "{{apiUrl}}/v1/payments/create",
@@ -583,12 +1145,292 @@
 									]
 								}
 							},
-							"response": []
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"redirectUrl\": \"https://auth.nordicapigateway.com/start/payment?startToken=ugAAAAVDaXBoZXJ0ZXh0AIAAAAAAwSQaaSor_xN_YKQcrnr7H9-o8IiulNRF40A5kPtH6HOQ2MdlabwA1_UZAMhPol6XNE-V9IXNK7KARGIL-VNS8MjvG1yeaV54iB7pxs3yRbGn4wCb1EyLv65y__bHtvUF7qTT_YG-mKixh1ftNSdiwDXvR-7NRlhPiknZMe5pPdgFSXYAEAAAAABp2SN-FI3OOYBIB7uq51c0EEtleUlkAAAAAAAA&paymentId=20240101.6459d4k3xjor9cusbcpcjiatuw\",\n    \"paymentId\": \"20240101.6459d4k3xjor9cusbcpcjiatuw\",\n    \"sessionId\": \"ugAAAAVDaXBoZXJ0ZXh0AIAAAAAA9js-PsolCPH6yECeRkrRew8HvdzFOF24BQTRPCkDQImeTteDe9cXNMd5LMkA5SZtHiGnl3Ho7NAkygr8MNiNI2J4i5TCwhNwwVYKaOLQmuIHv0yKxPcDx2haKlWeAyh3Ba4hahFTZMIADWx8IYD9j5842WkPGFGB-X4W87L8S1AFSXYAEAAAAAD9Ig4659LTjHFMIJbDAyaXEEtleUlkAAAAAAAA\"\n}"
 						}
 					]
 				},
 				{
-					"name": "Create Payment (independent)",
+					"name": "Get single payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v1/payments/{{paymentId}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"payments",
+								"{{paymentId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get single payment",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v1/payments/{{paymentId}}",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"payments",
+										"{{paymentId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"payment\": {\n        \"paymentId\": \"20240101.6459d4k3xjor9cusbcpcjiatuw\",\n        \"userHash\": \"aiia-postman-demo\",\n        \"providerId\": null,\n        \"providerPaymentId\": null,\n        \"request\": {\n            \"sourceAccountId\": null,\n            \"destination\": {\n                \"bban\": {\n                    \"bankCode\": \"1234\",\n                    \"accountNumber\": \"0123456789\"\n                },\n                \"iban\": null,\n                \"ownAccount\": null,\n                \"inpaymentForm\": null,\n                \"name\": \"John Doe\",\n                \"address\": null\n            },\n            \"amount\": {\n                \"value\": 2,\n                \"currency\": \"DKK\"\n            },\n            \"execution\": null,\n            \"message\": null,\n            \"transactionText\": null,\n            \"endToEndId\": null,\n            \"reference\": null,\n            \"identifiers\": null,\n            \"paymentMethod\": \"Domestic\"\n        },\n        \"status\": {\n            \"terminal\": false,\n            \"code\": \"Preparing\",\n            \"codeV2\": \"Preparing\",\n            \"lastUpdated\": \"2024-01-01T00:00:00.0000000+00:00\",\n            \"details\": null\n        },\n        \"state\": \"Preparing\",\n        \"created\": \"2024-01-01T00:00:00.00000000+00:00\",\n        \"source\": null,\n        \"execution\": {\n            \"type\": \"Normal\",\n            \"date\": null,\n            \"fee\": \"Unknown\",\n            \"feeAmount\": null\n        },\n        \"message\": null,\n        \"transactionText\": null,\n        \"identifiers\": {}\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get payments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v1/payments?from=2021-12-24T00:00:00Z&to=2021-12-24T12:00:00Z",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"payments"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2021-12-24T00:00:00Z"
+								},
+								{
+									"key": "to",
+									"value": "2021-12-24T12:00:00Z"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get payments",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v1/payments?from=2021-12-24T00:00:00Z&to=2021-12-24T12:00:00Z",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"payments"
+									],
+									"query": [
+										{
+											"key": "from",
+											"value": "2021-12-24T00:00:00Z"
+										},
+										{
+											"key": "to",
+											"value": "2021-12-24T12:00:00Z"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"payments\": [\n        {\n            \"paymentId\": \"20240101.6459d4k3xjor9cusbcpcjiatuw\",\n            \"userHash\": \"aiia-postman-demo\",\n            \"providerId\": null,\n            \"providerPaymentId\": null,\n            \"request\": {\n                \"sourceAccountId\": null,\n                \"destination\": {\n                    \"bban\": {\n                        \"bankCode\": \"1234\",\n                        \"accountNumber\": \"0123456789\"\n                    },\n                    \"iban\": null,\n                    \"ownAccount\": null,\n                    \"inpaymentForm\": null,\n                    \"name\": \"John Doe\",\n                    \"address\": null\n                },\n                \"amount\": {\n                    \"value\": 2,\n                    \"currency\": \"DKK\"\n                },\n                \"execution\": null,\n                \"message\": null,\n                \"transactionText\": null,\n                \"endToEndId\": null,\n                \"reference\": null,\n                \"identifiers\": null,\n                \"paymentMethod\": \"Domestic\"\n            },\n            \"status\": {\n                \"terminal\": false,\n                \"code\": \"Preparing\",\n                \"codeV2\": null,\n                \"lastUpdated\": \"2024-01-01T00:00:00.0000000+00:00\",\n                \"details\": null\n            },\n            \"state\": \"Preparing\",\n            \"created\": \"2024-01-01T00:00:00.0000000+00:00\",\n            \"source\": null,\n            \"execution\": {\n                \"type\": \"Normal\",\n                \"date\": null,\n                \"fee\": \"Unknown\",\n                \"feeAmount\": null\n            },\n            \"message\": null,\n            \"transactionText\": null,\n            \"identifiers\": null\n        }\n    ],\n    \"pagingToken\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Refresh payment status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v1/payments/{{paymentId}}/refresh-status",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v1",
+								"payments",
+								"{{paymentId}}",
+								"refresh-status"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Refresh payment status",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v1/payments/{{paymentId}}/refresh-status",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"payments",
+										"{{paymentId}}",
+										"refresh-status"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"payment\": {\n        \"paymentId\": \"20240101.6459d4k3xjor9cusbcpcjiatuw\",\n        \"userHash\": \"aiia-postman-demo\",\n        \"providerId\": null,\n        \"providerPaymentId\": null,\n        \"request\": {\n            \"sourceAccountId\": null,\n            \"destination\": {\n                \"bban\": {\n                    \"bankCode\": \"1234\",\n                    \"accountNumber\": \"0123456789\"\n                },\n                \"iban\": null,\n                \"ownAccount\": null,\n                \"inpaymentForm\": null,\n                \"name\": \"John Doe\",\n                \"address\": null\n            },\n            \"amount\": {\n                \"value\": 50,\n                \"currency\": \"DKK\"\n            },\n            \"execution\": null,\n            \"message\": null,\n            \"transactionText\": null,\n            \"endToEndId\": null,\n            \"reference\": null,\n            \"identifiers\": null,\n            \"paymentMethod\": \"Domestic\"\n        },\n        \"status\": {\n            \"terminal\": false,\n            \"code\": \"Preparing\",\n            \"codeV2\": \"Preparing\",\n            \"lastUpdated\": \"2024-01-01T00:00:00.0000000+00:00\",\n            \"details\": null\n        },\n        \"state\": \"Preparing\",\n        \"created\": \"2024-01-01T00:00:00.0000000+00:00\",\n        \"source\": null,\n        \"execution\": {\n            \"type\": \"Normal\",\n            \"date\": null,\n            \"fee\": \"Unknown\",\n            \"feeAmount\": null\n        },\n        \"message\": null,\n        \"transactionText\": null,\n        \"identifiers\": {}\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Create session payment",
 					"event": [
 						{
 							"listen": "test",
@@ -641,502 +1483,52 @@
 							]
 						}
 					},
-					"response": []
-				},
-				{
-					"name": "Refresh Payment Status",
-					"event": [
+					"response": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
+							"name": "Create session payment",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
 								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n}"
-						},
-						"url": {
-							"raw": "{{apiUrl}}/v1/payments/{{paymentId}}/refresh-status",
-							"host": [
-								"{{apiUrl}}"
-							],
-							"path": [
-								"v1",
-								"payments",
-								"{{paymentId}}",
-								"refresh-status"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Payments: Payouts",
-			"item": [
-				{
-					"name": "Create Payment",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const response = pm.response.json()",
-									"pm.test('hasPaymentId', () => pm.expect(response.payment).to.have.property('paymentId'));",
-									"",
-									"const paymentIds = JSON.parse(pm.environment.get(\"paymentIds\") || '[]');",
-									"paymentIds.push(response.payment.paymentId);",
-									"pm.environment.set(\"paymentIds\", JSON.stringify(paymentIds));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"request\": {\n\t\t\"sourceAccountId\": \"{{accountId}}\",\n\t\t\"destination\": {\"bban\": {\"bankCode\": \"1234\", \"accountNumber\": \"0123456789\"}, \"name\": \"John Doe\"},\n\t\t\"amount\": { \"value\": \"5\", \"currency\": \"DKK\" }\n\t}\n}"
-						},
-						"url": {
-							"raw": "{{apiUrl}}/v2/payments",
-							"host": [
-								"{{apiUrl}}"
-							],
-							"path": [
-								"v2",
-								"payments"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Authorization (with session)",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const response = pm.response.json();",
-									"pm.test('authorizationId', () => pm.expect(response).to.have.property('authorizationId'));",
-									"",
-									"if (response.authorizationId) {",
-									"    pm.environment.set(\"authorizationId\", response.authorizationId);",
-									"    pm.environment.set('paymentIds', ''); // reset state for next run",
-									"}",
-									"",
-									"function embeddedConnectFlow(url) {",
-									"    if (!url) return;",
-									"    pm.visualizer.set(`<div style=\"padding: 1rem; background: white;\">",
-									"    <h5>Connect Flow</h5>",
-									"    <p><button onclick=\"location.assign('{{url}}')\">Open in Postman</button> &nbsp;",
-									"       <button onclick=\"setClipboard('{{url}}')\">Copy URL</button> <span style=\"display: none; font-size: 1em\" id=\"cmsg\">✅</span></p>",
-									"    <pre style=\"font-size: 0.8em\">{{url}}</pre>",
-									"    <script>function setClipboard(text) {",
-									"        navigator.clipboard.write([new ClipboardItem({ \"text/plain\": new Blob([text], { type:\"text/plain\" }) })]).then(() => {",
-									"            cmsg.style.display = ''; setTimeout(() => cmsg.style.display = 'none', 1000); });",
-									"    }</script>",
-									"   </div>`, { url });",
-									"}",
-									"",
-									"embeddedConnectFlow(response.authorizationUrl);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"userHash\": \"aiia-postman-demo\",\n\t\"request\": {\n\t\t\"destination\": { \"bban\": { \"bankCode\": \"1234\", \"accountNumber\": \"0123456789\" }, \"name\": \"John Doe\" },\n\t\t\"amount\": { \"value\": \"2.00\", \"currency\": \"DKK\" }\n\t},\n    \"redirectUrl\": \"https://httpbin.org/anything\"\n}"
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v1/payments/create",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v1",
+										"payments",
+										"create"
+									]
+								}
 							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{accessToken}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"paymentIds\": {{paymentIds}},\n\t\"redirectUrl\": \"https://httpbin.org/anything\"\n}"
-						},
-						"url": {
-							"raw": "{{apiUrl}}/v2/payment-authorizations",
-							"host": [
-								"{{apiUrl}}"
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
 							],
-							"path": [
-								"v2",
-								"payment-authorizations"
-							]
+							"cookie": [],
+							"body": "{\n    \"redirectUrl\": \"https://auth.nordicapigateway.com/start/payment?startToken=ugAAAAVDaXBoZXJ0ZXh0AIAAAAAASKkoc-HmZ8OeDphHiZwpQhYD8DO_eN85ZALcRE4mGBLchJtCOG6j3Sok2D9oz7cUohgeaQaBHXgGQ0mjr9Q7sCWRmRSSFFmlcDTg4QEmCf3zDxumrkWBN5q2PIGbvjQM2OPcKfax_1iQFzQavKfa9pGoEuY_uqyMv-N2IKvgfUsFSXYAEAAAAABYPKEyOPCnlzUnWdWcAKPCEEtleUlkAAAAAAAA&paymentId=20240101.fuytmqhn6itw8p45rsfo9d6tfw\",\n    \"paymentId\": \"20240101.fuytmqhn6itw8p45rsfo9d6tfw\",\n    \"sessionId\": \"ugAAAAVDaXBoZXJ0ZXh0AIAAAAAASs4kgwIDmPXCpyZD6UYuDBa45_Rg5qtPab1Vlwdy59QZUixtWzM0Tfpgc8UPV3CTKfpXHob5cVh0dAxRSubztXrPObMSQXkzXGohDYngerdz6b6KyqXaeAxiStoKVr6CHIxeWayrFxgIGFvbt5UT3z8ptH3W5vZ4ceAlOhlu3qcFSXYAEAAAAABsSone9aSF3PmKZLm8_dV9EEtleUlkAAAAAAAA\"\n}"
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Authorization Status",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{apiUrl}}/v2/payment-authorizations/{{authorizationId}}",
-							"host": [
-								"{{apiUrl}}"
-							],
-							"path": [
-								"v2",
-								"payment-authorizations",
-								"{{authorizationId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Refresh Payment Statuses",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{}"
-						},
-						"url": {
-							"raw": "{{apiUrl}}/v2/payment-authorizations/{{authorizationId}}//refresh-payment-statuses",
-							"host": [
-								"{{apiUrl}}"
-							],
-							"path": [
-								"v2",
-								"payment-authorizations",
-								"{{authorizationId}}",
-								"",
-								"refresh-payment-statuses"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "List Payments from Authorization",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{apiUrl}}/v2/payment-authorizations/{{authorizationId}}/payments",
-							"host": [
-								"{{apiUrl}}"
-							],
-							"path": [
-								"v2",
-								"payment-authorizations",
-								"{{authorizationId}}",
-								"payments"
-							]
-						}
-					},
-					"response": []
+					]
 				}
-			]
-		},
-		{
-			"name": "Categorization",
-			"item": [
-				{
-					"name": "Categorize Data",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "\n{\n    \"accounts\": [\n        {\n            \"account\": {\n                \"id\": \"a1\",\n                \"name\": \"(not relevant)\",\n                \"number\": {},\n                \"providerId\": \"(not relevant)\",\n                \"type\": \"(not relevant)\",\n                \"features\": {},\n                \"bookedBalance\": {\n                    \"value\": 0,\n                    \"currency\": \"DKK\"\n                }\n            },\n            \"transactions\": [\n                {\n                    \"id\": \"t1\",\n                    \"date\": \"2020-09-08\",\n                    \"text\": \"Fakta\",\n                    \"type\": \"(not relevant)\",\n                    \"state\": \"(not relevant)\",\n                    \"amount\": {\n                        \"value\": \"10\",\n                        \"currency\": \"DKK\"\n                    }\n                }\n            ]\n        }\n    ]\n}\n"
-						},
-						"url": {
-							"raw": "{{apiUrl}}/v2/category-sets/pfm/categorize",
-							"host": [
-								"{{apiUrl}}"
-							],
-							"path": [
-								"v2",
-								"category-sets",
-								"pfm",
-								"categorize"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "List Categories",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Accept-Language",
-								"value": "da,en,sv",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{apiUrl}}/v2/category-sets/pfm/categories",
-							"host": [
-								"{{apiUrl}}"
-							],
-							"path": [
-								"v2",
-								"category-sets",
-								"pfm",
-								"categories"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Providers",
-			"item": [
-				{
-					"name": "List Providers",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{apiUrl}}/v1/providers",
-							"host": [
-								"{{apiUrl}}"
-							],
-							"path": [
-								"v1",
-								"providers"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Provider",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{apiUrl}}/v1/providers/{{providerId}}",
-							"host": [
-								"{{apiUrl}}"
-							],
-							"path": [
-								"v1",
-								"providers",
-								"{{providerId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Payment Methods",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{apiUrl}}/v1/providers/{{providerId}}/payment-methods",
-							"host": [
-								"{{apiUrl}}"
-							],
-							"path": [
-								"v1",
-								"providers",
-								"{{providerId}}",
-								"payment-methods"
-							]
-						}
-					},
-					"response": []
-				}
-			]
+			],
+			"description": "Endpoints for performing Payment Initiation."
 		},
 		{
 			"name": "Consent",
