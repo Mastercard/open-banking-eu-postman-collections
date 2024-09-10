@@ -1531,10 +1531,10 @@
 			"description": "Endpoints for performing Payment Initiation."
 		},
 		{
-			"name": "Consent",
+			"name": "Consents",
 			"item": [
 				{
-					"name": "Fetch Consent",
+					"name": "Fetch consent",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1558,10 +1558,51 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Fetch consent",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"loginToken\": {{loginToken}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v2/consents",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v2",
+										"consents"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"consentId\": \"ConsentId\",\n    \"status\": \"Active\",\n    \"expirationDateTime\": \"2024-12-31T00:00:00.0000000Z\",\n    \"providerId\": \"DemoBank\"\n}"
+						}
+					]
 				},
 				{
-					"name": "Revoke Consent",
+					"name": "Revoke consent",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -1585,7 +1626,40 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Revoke consent",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"loginToken\": {{loginToken}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v2/consents",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v2",
+										"consents"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				}
 			]
 		}
