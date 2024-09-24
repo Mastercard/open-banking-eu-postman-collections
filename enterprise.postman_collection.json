@@ -1534,13 +1534,22 @@
 			"name": "Consents",
 			"item": [
 				{
-					"name": "Fetch consent",
+					"name": "Get consent",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "POST",
-						"header": [],
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Login-Token",
+								"value": "{{loginToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"loginToken\": \"{{loginToken}}\"\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1560,13 +1569,19 @@
 					},
 					"response": [
 						{
-							"name": "Fetch consent",
+							"name": "Get consent",
 							"originalRequest": {
-								"method": "POST",
-								"header": [],
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Login-Token",
+										"value": "{{loginToken}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"loginToken\": {{loginToken}}\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1597,7 +1612,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"consentId\": \"ConsentId\",\n    \"status\": \"Active\",\n    \"expirationDateTime\": \"2024-12-31T00:00:00.0000000Z\",\n    \"providerId\": \"DemoBank\"\n}"
+							"body": "{\n    \"consentId\": \"ConsentId\",\n    \"status\": \"Active\",\n    \"expirationDateTime\": \"2024-12-23T10:45:07.007312Z\",\n    \"providerId\": \"DemoBank\"\n}"
 						}
 					]
 				},
@@ -1605,10 +1620,16 @@
 					"name": "Revoke consent",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "X-Login-Token",
+								"value": "{{loginToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"loginToken\": \"{{loginToken}}\"\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1634,7 +1655,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"loginToken\": {{loginToken}}\n}",
+									"raw": "{\n    \"loginToken\": \"{{loginToken}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1654,10 +1675,18 @@
 							},
 							"status": "No Content",
 							"code": 204,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				}
