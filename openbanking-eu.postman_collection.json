@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "58762784-b8db-4d70-b37b-2b7d10a5481f",
+		"_postman_id": "fe210f96-2fd8-401a-a923-3fe2bf081f7f",
 		"name": "🇪🇺 Mastercard Open Banking EU - Demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20782065"
+		"_exporter_id": "32136737"
 	},
 	"item": [
 		{
@@ -413,7 +413,8 @@
 											"",
 											"pm.environment.set(\"paymentLinkId\", response.paymentLinkId);"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -429,7 +430,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"paymentRequest\": {\n        \"amount\": \"100\",\n        \"currency\": \"DKK\",\n        \"schemeId\": \"DanishDomesticCreditTransfer\",\n        \"reference\": \"1234567890\",\n        \"destinationId\": \"{{destination_id}}\",\n        \"redirectUrl\": \"{{client_redirect_uri}}\"\n    },\n    \"expiryDate\": \"2022-12-01\"\n}"
+									"raw": "{\n    \"paymentRequest\": {\n        \"amount\": \"100\",\n        \"currency\": \"DKK\",\n        \"schemeId\": \"DanishDomesticCreditTransfer\",\n        \"reference\": \"1234567890\",\n        \"destinationId\": \"{{destination_id}}\",\n        \"issuePayerToken\": {{issue_payer_token}},\n        \"redirectUrl\": \"{{client_redirect_uri}}\"\n    },\n    \"expiryDate\": \"2022-12-01\"\n}"
 								},
 								"url": {
 									"raw": "{{base_url}}/v2/payments/accept/links",
@@ -488,6 +489,151 @@
 					]
 				},
 				{
+					"name": "Payer Tokens",
+					"item": [
+						{
+							"name": "Get Payer Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const response = pm.response.json()",
+											"",
+											"if (response.payerToken) {",
+											"    pm.environment.set(\"payerToken\", response.payerToken);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v2/payments/accept/{{acceptPaymentId}}/payer-token",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v2",
+										"payments",
+										"accept",
+										"{{acceptPaymentId}}",
+										"payer-token"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Accept Payment Using Payer Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const response = pm.response.json()",
+											"pm.test('hasPaymentId', () => pm.expect(response).to.have.property('paymentId'));",
+											"",
+											"pm.environment.set(\"acceptPaymentId\", response.paymentId);",
+											"",
+											"function embeddedConnectFlow(url) {",
+											"    if (!url) return;",
+											"    pm.visualizer.set(`<div style=\"padding: 1rem; background: white;\">",
+											"    <h5>Connect Flow</h5>",
+											"    <p><button onclick=\"location.assign('{{url}}')\">Open in Postman</button> &nbsp;",
+											"       <button onclick=\"setClipboard('{{url}}')\">Copy URL</button> <span style=\"display: none; font-size: 1em\" id=\"cmsg\">✅</span></p>",
+											"    <pre style=\"font-size: 0.8em\">{{url}}</pre>",
+											"    <script>function setClipboard(text) {",
+											"        navigator.clipboard.write([new ClipboardItem({ \"text/plain\": new Blob([text], { type:\"text/plain\" }) })]).then(() => {",
+											"            cmsg.style.display = ''; setTimeout(() => cmsg.style.display = 'none', 1000); });",
+											"    }</script>",
+											"   </div>`, { url });",
+											"}",
+											"",
+											"embeddedConnectFlow(response.authorizationUrl);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": \"100\",\n    \"currency\": \"DKK\",\n    \"schemeId\": \"DanishDomesticCreditTransfer\",\n    \"reference\": \"1234567890\",\n    \"destinationId\": \"{{destination_id}}\",\n    \"issuePayerToken\": {{issue_payer_token}},\n    \"payerToken\": \"{{payerToken}}\",\n    \"redirectUrl\": \"{{client_redirect_uri}}\",\n    \"preselectedCountry\": \"DK\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/v2/payments/accept",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v2",
+										"payments",
+										"accept"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Payment Link Using Payer Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const response = pm.response.json()",
+											"",
+											"pm.environment.set(\"paymentLinkId\", response.paymentLinkId);s"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"paymentRequest\": {\n        \"amount\": \"100\",\n        \"currency\": \"DKK\",\n        \"schemeId\": \"DanishDomesticCreditTransfer\",\n        \"reference\": \"1234567890\",\n        \"destinationId\": \"{{destination_id}}\",\n        \"issuePayerToken\": {{issue_payer_token}},\n        \"payerToken\": \"{{payerToken}}\",\n        \"redirectUrl\": \"{{client_redirect_uri}}\"\n    },\n    \"expiryDate\": \"2022-12-01\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/v2/payments/accept/links",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v2",
+										"payments",
+										"accept",
+										"links"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Create Accept Payment",
 					"event": [
 						{
@@ -531,7 +677,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"amount\": \"100\",\n    \"currency\": \"DKK\",\n    \"schemeId\": \"DanishDomesticCreditTransfer\",\n    \"reference\": \"1234567890\",\n    \"destinationId\": \"{{destination_id}}\",\n    \"redirectUrl\": \"{{client_redirect_uri}}\",\n    \"preselectedCountry\": \"DK\"\n}"
+							"raw": "{\n    \"amount\": \"100\",\n    \"currency\": \"DKK\",\n    \"schemeId\": \"DanishDomesticCreditTransfer\",\n    \"reference\": \"1234567890\",\n    \"destinationId\": \"{{destination_id}}\",\n    \"issuePayerToken\": {{issue_payer_token}},\n    \"redirectUrl\": \"{{client_redirect_uri}}\",\n    \"preselectedCountry\": \"DK\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/v2/payments/accept",
@@ -584,7 +730,7 @@
 							"query": [
 								{
 									"key": "",
-									"value": null,
+									"value": "",
 									"disabled": true
 								}
 							]
