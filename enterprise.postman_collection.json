@@ -1581,6 +1581,168 @@
 				}
 			],
 			"description": "Endpoints for performing Payment Initiation."
+		},
+		{
+			"name": "Consents",
+			"item": [
+				{
+					"name": "Get consent",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Login-Token",
+								"value": "{{loginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v2/consents",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v2",
+								"consents"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get consent",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Login-Token",
+										"value": "{{loginToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v2/consents",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v2",
+										"consents"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"consentId\": \"ConsentId\",\n    \"status\": \"Active\",\n    \"expirationDateTime\": \"2024-12-23T10:45:07.007312Z\",\n    \"providerId\": \"DemoBank\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Revoke consent",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Login-Token",
+								"value": "{{loginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/v2/consents",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"v2",
+								"consents"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Revoke consent",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"loginToken\": \"{{loginToken}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/v2/consents",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"v2",
+										"consents"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
 		}
 	],
 	"event": [
